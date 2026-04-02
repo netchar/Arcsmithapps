@@ -1,19 +1,17 @@
 import { getAllApps } from "@/lib/apps";
-import { HomeHero } from "@/components/sections/HomeHero";
+import { FeaturedHero } from "@/components/sections/FeaturedHero";
 import { AppGrid } from "@/components/sections/AppGrid";
 
 export default function HomePage() {
   const apps = getAllApps();
+  const featured = apps.find((a) => a.featured) ?? apps[0];
 
   return (
-    <div className="relative">
-      {/* Background glow effects */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-[radial-gradient(circle,rgba(30,77,58,0.12)_0%,transparent_70%)]" />
-      </div>
+    <div>
+      <FeaturedHero app={featured} />
 
-      <div className="relative mx-auto max-w-[1200px] px-6 py-24 sm:py-32">
-        <HomeHero />
+      <div className="mx-auto max-w-[1200px] px-6 py-20">
+        <h2 className="text-xl font-semibold text-text-primary mb-8">Our Apps</h2>
         <AppGrid apps={apps} />
       </div>
     </div>
