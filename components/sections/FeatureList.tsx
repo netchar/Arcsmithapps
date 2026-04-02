@@ -18,15 +18,15 @@ export function FeatureList({ features }: FeatureListProps) {
         return (
           <div
             key={feature.title}
-            className="rounded-xl border border-border bg-bg-secondary/50 p-5 transition-colors hover:border-border-hover"
+            className="group rounded-xl border border-border bg-bg-card p-5 transition-all duration-300 hover:border-border-hover hover:shadow-[0_4px_24px_rgba(30,77,58,0.08)]"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-subtle border border-accent/10">
-              <Icon size={16} className="text-accent" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-subtle border border-accent/15">
+              <Icon size={18} className="text-accent" />
             </div>
             <h3 className="mt-3 text-sm font-semibold text-text-primary">
               {feature.title}
             </h3>
-            <p className="mt-1 text-sm text-text-muted leading-relaxed">
+            <p className="mt-1.5 text-sm text-text-muted leading-relaxed">
               {feature.description}
             </p>
           </div>

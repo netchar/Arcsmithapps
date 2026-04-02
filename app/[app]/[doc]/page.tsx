@@ -50,7 +50,7 @@ export default async function LegalPage({ params }: PageProps) {
         Last updated: {frontmatter.lastUpdated}
       </p>
 
-      <article className="prose mt-10 max-w-none">
+      <article className="prose prose-invert mt-10 max-w-none">
         <MDXRemote source={content} />
       </article>
     </div>
