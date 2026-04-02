@@ -6,6 +6,7 @@ import { ShowcaseStrip } from "@/components/sections/ShowcaseStrip";
 import { FeatureSpotlight } from "@/components/sections/FeatureSpotlight";
 import { FeatureGrid } from "@/components/sections/FeatureGrid";
 import { CtaBanner } from "@/components/sections/CtaBanner";
+import { AppLegal } from "@/components/sections/AppLegal";
 
 interface PageProps {
   params: Promise<{ app: string }>;
@@ -63,6 +64,9 @@ export default async function AppPage({ params }: PageProps) {
 
       {/* Section 5: CTA Banner */}
       <CtaBanner app={app} />
+
+      {/* Section 6: Legal links */}
+      <AppLegal appSlug={app.slug} appName={app.name} />
     </div>
   );
 }

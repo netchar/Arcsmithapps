@@ -8,6 +8,7 @@ export interface AppFeature {
   title: string;
   description: string;
   icon: string;
+  screenshot?: string;
 }
 
 export interface ShowcaseItem {

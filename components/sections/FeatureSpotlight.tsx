@@ -23,7 +23,7 @@ export function FeatureSpotlight({ features, screenshots, appName }: FeatureSpot
         const Icon = getIcon(feature.icon);
         const isReversed = i % 2 === 1;
         // Use different screenshots for each spotlight, cycling through available ones
-        const screenshotSrc = screenshots[i % screenshots.length];
+        const screenshotSrc = feature.screenshot ?? screenshots[i % screenshots.length];
 
         return (
           <div
