@@ -31,9 +31,7 @@ export function FeaturedHero({ app }: FeaturedHeroProps) {
               Featured App
             </p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-text-primary tracking-tight leading-[1.1]">
-              {app.tagline.split(" ").slice(0, -1).join(" ")}{" "}
-              <br />
-              {app.tagline.split(" ").slice(-1)}
+              {app.tagline}
             </h1>
             <p className="mt-5 text-lg text-text-secondary leading-relaxed max-w-lg mx-auto lg:mx-0">
               {app.description}

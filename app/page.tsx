@@ -10,8 +10,11 @@ export default function HomePage() {
     <div>
       <FeaturedHero app={featured} />
 
-      <div className="mx-auto max-w-[1200px] px-6 py-20">
-        <h2 className="text-xl font-semibold text-text-primary mb-8">Our Apps</h2>
+      <div className="mx-auto max-w-[1200px] px-6 py-24">
+        <div className="text-center mb-12">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent mb-3">Our Apps</p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-text-primary">Crafted with care</h2>
+        </div>
         <AppGrid apps={apps} />
       </div>
     </div>
