@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getApp, getAllAppSlugs } from "@/lib/apps";
-import { AppHero } from "@/components/sections/AppHero";
-import { FeatureList } from "@/components/sections/FeatureList";
-import { Screenshots } from "@/components/sections/Screenshots";
+import { AppLandingHero } from "@/components/sections/AppLandingHero";
+import { ShowcaseStrip } from "@/components/sections/ShowcaseStrip";
+import { FeatureSpotlight } from "@/components/sections/FeatureSpotlight";
+import { FeatureGrid } from "@/components/sections/FeatureGrid";
+import { CtaBanner } from "@/components/sections/CtaBanner";
 
 interface PageProps {
   params: Promise<{ app: string }>;
@@ -31,30 +33,36 @@ export default async function AppPage({ params }: PageProps) {
   const app = getApp(slug);
   if (!app) notFound();
 
+  // Split features: first 3 get spotlights, rest go in grid
+  const spotlightFeatures = app.features.slice(0, 3);
+  const gridFeatures = app.features.slice(3);
+
   return (
-    <div className="mx-auto max-w-[1200px] px-6 py-20">
-      {/* Hero card with phone mockups */}
-      <AppHero app={app} />
+    <div>
+      {/* Section 1: Full-width hero */}
+      <AppLandingHero app={app} />
 
-      {/* Screenshots gallery */}
+      {/* Section 2: Showcase strip with scrollable cards */}
       {app.showcase.length > 0 && (
-        <section className="mt-20">
-          <h2 className="text-xl font-semibold text-text-primary mb-8">
-            Screenshots
-          </h2>
-          <Screenshots showcase={app.showcase} appName={app.name} />
-        </section>
+        <ShowcaseStrip showcase={app.showcase} appName={app.name} />
       )}
 
-      {/* Features */}
-      {app.features.length > 0 && (
-        <section className="mt-20">
-          <h2 className="text-xl font-semibold text-text-primary mb-8">
-            Features
-          </h2>
-          <FeatureList features={app.features} />
-        </section>
+      {/* Section 3: Feature spotlights — alternating layout */}
+      {spotlightFeatures.length > 0 && (
+        <FeatureSpotlight
+          features={spotlightFeatures}
+          screenshots={app.screenshots}
+          appName={app.name}
+        />
       )}
+
+      {/* Section 4: Remaining features in grid */}
+      {gridFeatures.length > 0 && (
+        <FeatureGrid features={gridFeatures} />
+      )}
+
+      {/* Section 5: CTA Banner */}
+      <CtaBanner app={app} />
     </div>
   );
 }
