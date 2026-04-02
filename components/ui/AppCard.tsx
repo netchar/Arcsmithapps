@@ -17,7 +17,7 @@ export function AppCard({ app }: AppCardProps) {
       <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[radial-gradient(circle_at_50%_0%,rgba(30,77,58,0.08),transparent_70%)]" />
 
       <div className="relative flex items-start gap-4">
-        <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border border-border bg-bg-tertiary">
+        <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-[14px]">
           <Image
             src={app.icon}
             alt={`${app.name} icon`}

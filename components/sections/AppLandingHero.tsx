@@ -31,7 +31,7 @@ export function AppLandingHero({ app }: AppLandingHeroProps) {
           >
             {/* App identity */}
             <div className="flex items-center gap-4 justify-center lg:justify-start mb-8">
-              <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border border-white/[0.06] bg-bg-tertiary shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
+              <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-[16px] shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
                 <Image
                   src={app.icon}
                   alt={`${app.name} icon`}
