@@ -2,17 +2,20 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-bg-primary: #0f1814;
-  --color-bg-secondary: #141e1a;
-  --color-bg-tertiary: #1a2420;
-  --color-bg-card: #162019;
+  /* Near-black body — the darkest layer */
+  --color-bg-primary: #0a0a0c;
+  /* Slightly lifted sections */
+  --color-bg-secondary: #0f1210;
+  /* Cards and interactive surfaces */
+  --color-bg-tertiary: #151a17;
+  --color-bg-card: #131816;
 
   --color-text-primary: #e8f0ec;
-  --color-text-secondary: #7a9488;
-  --color-text-muted: #4d6358;
+  --color-text-secondary: #8a9990;
+  --color-text-muted: #566560;
 
-  --color-border: #1c2620;
-  --color-border-hover: #283430;
+  --color-border: #1e2622;
+  --color-border-hover: #2a342e;
 
   --color-accent: #2d7a5e;
   --color-accent-hover: #34926e;

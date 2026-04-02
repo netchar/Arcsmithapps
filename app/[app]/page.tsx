@@ -37,12 +37,12 @@ export default async function AppPage({ params }: PageProps) {
       <AppHero app={app} />
 
       {/* Screenshots gallery */}
-      {app.screenshots.length > 0 && (
+      {app.showcase.length > 0 && (
         <section className="mt-20">
           <h2 className="text-xl font-semibold text-text-primary mb-8">
             Screenshots
           </h2>
-          <Screenshots screenshots={app.screenshots} appName={app.name} />
+          <Screenshots showcase={app.showcase} appName={app.name} />
         </section>
       )}
 

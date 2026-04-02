@@ -10,6 +10,12 @@ export interface AppFeature {
   icon: string;
 }
 
+export interface ShowcaseItem {
+  image: string;
+  title: string;
+  caption: string;
+}
+
 export interface AppData {
   name: string;
   slug: string;
@@ -20,6 +26,7 @@ export interface AppData {
   featured: boolean;
   order: number;
   screenshots: string[];
+  showcase: ShowcaseItem[];
   features: AppFeature[];
   tech: string[];
   description: string;
@@ -33,8 +40,9 @@ export function getApp(slug: string): AppData | null {
   const { data, content } = matter(raw);
 
   return {
-    ...(data as Omit<AppData, "description">),
+    ...(data as Omit<AppData, "description" | "showcase">),
     description: content.trim(),
+    showcase: (data as Record<string, unknown>).showcase as ShowcaseItem[] ?? [],
   };
 }
 

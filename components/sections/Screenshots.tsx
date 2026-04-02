@@ -1,24 +1,37 @@
 import Image from "next/image";
+import type { ShowcaseItem } from "@/lib/apps";
 
 interface ScreenshotsProps {
-  screenshots: string[];
+  showcase: ShowcaseItem[];
   appName: string;
 }
 
-export function Screenshots({ screenshots, appName }: ScreenshotsProps) {
-  if (screenshots.length === 0) return null;
+export function Screenshots({ showcase, appName }: ScreenshotsProps) {
+  if (showcase.length === 0) return null;
 
   return (
     <div className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide">
-      {screenshots.map((src, i) => (
-        <div key={src} className="shrink-0 snap-center">
-          <div className="relative w-[220px] h-[440px] overflow-hidden rounded-[28px] border border-white/[0.06] bg-black shadow-[0_6px_24px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.05)]">
+      {showcase.map((item) => (
+        <div
+          key={item.image}
+          className="shrink-0 snap-center flex flex-col items-center rounded-2xl bg-gradient-to-b from-[#1a2420] to-[#111a16] border border-border p-6 pt-7 pb-5 w-[280px]"
+        >
+          {/* Caption */}
+          <h3 className="text-base font-bold text-text-primary text-center leading-tight mb-1">
+            {item.title}
+          </h3>
+          <p className="text-xs text-text-secondary text-center mb-4 leading-relaxed">
+            {item.caption}
+          </p>
+
+          {/* Phone frame */}
+          <div className="relative w-[200px] h-[433px] overflow-hidden rounded-[24px] border border-white/[0.06] bg-black shadow-[0_4px_16px_rgba(0,0,0,0.4)]">
             <Image
-              src={src}
-              alt={`${appName} screenshot ${i + 1}`}
+              src={item.image}
+              alt={`${appName} — ${item.title}`}
               fill
               className="object-cover object-top"
-              sizes="220px"
+              sizes="200px"
             />
           </div>
         </div>
