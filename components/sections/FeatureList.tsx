@@ -6,7 +6,7 @@ interface FeatureListProps {
 }
 
 function getIcon(iconName: string) {
-  const Icon = (LucideIcons as Record<string, LucideIcons.LucideIcon>)[iconName];
+  const Icon = (LucideIcons as unknown as Record<string, LucideIcons.LucideIcon>)[iconName];
   return Icon ?? LucideIcons.Sparkles;
 }
 
