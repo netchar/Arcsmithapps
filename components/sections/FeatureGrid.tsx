@@ -6,6 +6,9 @@ import type { AppFeature } from "@/lib/apps";
 
 interface FeatureGridProps {
   features: AppFeature[];
+  dict: {
+    features: { moreLabel: string; moreHeading: string };
+  };
 }
 
 function getIcon(iconName: string) {
@@ -13,7 +16,7 @@ function getIcon(iconName: string) {
   return Icon ?? LucideIcons.Sparkles;
 }
 
-export function FeatureGrid({ features }: FeatureGridProps) {
+export function FeatureGrid({ features, dict }: FeatureGridProps) {
   return (
     <section className="py-20 sm:py-24">
       <div className="mx-auto max-w-[1200px] px-6">
@@ -25,10 +28,10 @@ export function FeatureGrid({ features }: FeatureGridProps) {
           className="mb-10"
         >
           <p className="text-xs font-medium text-accent tracking-[0.2em] uppercase mb-3">
-            And more
+            {dict.features.moreLabel}
           </p>
           <h2 className="text-2xl sm:text-3xl font-bold text-text-primary tracking-tight">
-            Everything you need
+            {dict.features.moreHeading}
           </h2>
         </motion.div>
 

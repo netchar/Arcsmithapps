@@ -7,7 +7,7 @@ import { FeatureSpotlight } from "@/components/sections/FeatureSpotlight";
 import { FeatureGrid } from "@/components/sections/FeatureGrid";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { AppLegal } from "@/components/sections/AppLegal";
-import { hasLocale, locales } from "@/lib/i18n";
+import { getDictionary, hasLocale, locales, type Locale } from "@/lib/i18n";
 
 interface PageProps {
   params: Promise<{ lang: string; app: string }>;
@@ -37,6 +37,7 @@ export default async function AppPage({ params }: PageProps) {
   const { lang, app: slug } = await params;
   if (!hasLocale(lang)) notFound();
 
+  const dict = await getDictionary(lang as Locale);
   const app = getApp(slug);
   if (!app) notFound();
 
@@ -45,9 +46,9 @@ export default async function AppPage({ params }: PageProps) {
 
   return (
     <div>
-      <AppLandingHero app={app} />
+      <AppLandingHero app={app} dict={dict} />
       {app.showcase.length > 0 && (
-        <ShowcaseStrip showcase={app.showcase} appName={app.name} />
+        <ShowcaseStrip showcase={app.showcase} appName={app.name} dict={dict} />
       )}
       {spotlightFeatures.length > 0 && (
         <FeatureSpotlight
@@ -56,9 +57,11 @@ export default async function AppPage({ params }: PageProps) {
           appName={app.name}
         />
       )}
-      {gridFeatures.length > 0 && <FeatureGrid features={gridFeatures} />}
-      <CtaBanner app={app} />
-      <AppLegal appSlug={app.slug} appName={app.name} lang={lang} />
+      {gridFeatures.length > 0 && (
+        <FeatureGrid features={gridFeatures} dict={dict} />
+      )}
+      <CtaBanner app={app} dict={dict} />
+      <AppLegal appSlug={app.slug} appName={app.name} lang={lang} dict={dict} />
     </div>
   );
 }

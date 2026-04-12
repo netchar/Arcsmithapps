@@ -6,9 +6,10 @@ import type { AppData } from "@/lib/apps";
 
 interface AppGridProps {
   apps: AppData[];
+  lang: string;
 }
 
-export function AppGrid({ apps }: AppGridProps) {
+export function AppGrid({ apps, lang }: AppGridProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
       {apps.map((app, i) => (
@@ -22,7 +23,7 @@ export function AppGrid({ apps }: AppGridProps) {
             ease: [0.22, 1, 0.36, 1],
           }}
         >
-          <AppCard app={app} />
+          <AppCard app={app} lang={lang} />
         </motion.div>
       ))}
     </div>

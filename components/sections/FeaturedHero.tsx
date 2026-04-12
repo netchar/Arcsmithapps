@@ -4,13 +4,19 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { PhoneMockup } from "@/components/ui/PhoneMockup";
+import { localePath } from "@/lib/locale-path";
 import type { AppData } from "@/lib/apps";
 
 interface FeaturedHeroProps {
   app: AppData;
+  lang: string;
+  dict: {
+    hero: { featured: string };
+    cta: { learnMore: string; comingSoon: string };
+  };
 }
 
-export function FeaturedHero({ app }: FeaturedHeroProps) {
+export function FeaturedHero({ app, lang, dict }: FeaturedHeroProps) {
   return (
     <section className="relative overflow-hidden">
       {/* Background gradient + glow */}
@@ -28,7 +34,7 @@ export function FeaturedHero({ app }: FeaturedHeroProps) {
             className="flex-1 text-center lg:text-left"
           >
             <p className="text-sm font-medium text-accent tracking-wide uppercase mb-4">
-              Featured App
+              {dict.hero.featured}
             </p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-text-primary tracking-tight leading-[1.1]">
               {app.tagline}
@@ -39,15 +45,15 @@ export function FeaturedHero({ app }: FeaturedHeroProps) {
 
             <div className="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
               <Link
-                href={`/${app.slug}`}
+                href={localePath(lang, `/${app.slug}`)}
                 className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#1e4d3a] to-[#163d2e] px-7 py-3.5 text-sm font-semibold text-[#d0e8dc] transition-all hover:shadow-[0_4px_20px_rgba(30,77,58,0.4)] cursor-pointer"
               >
-                Learn more
+                {dict.cta.learnMore}
                 <ArrowRight size={16} />
               </Link>
               {app.status === "coming-soon" && (
                 <span className="inline-flex items-center rounded-xl bg-accent-subtle px-5 py-3.5 text-sm font-medium text-accent border border-accent/20">
-                  Coming Soon
+                  {dict.cta.comingSoon}
                 </span>
               )}
             </div>

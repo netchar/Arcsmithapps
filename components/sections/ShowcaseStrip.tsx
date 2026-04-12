@@ -8,9 +8,12 @@ import type { ShowcaseItem } from "@/lib/apps";
 interface ShowcaseStripProps {
   showcase: ShowcaseItem[];
   appName: string;
+  dict: {
+    showcase: { label: string; heading: string };
+  };
 }
 
-export function ShowcaseStrip({ showcase, appName }: ShowcaseStripProps) {
+export function ShowcaseStrip({ showcase, appName, dict }: ShowcaseStripProps) {
   const [active, setActive] = useState(0);
   const item = showcase[active];
 
@@ -25,10 +28,10 @@ export function ShowcaseStrip({ showcase, appName }: ShowcaseStripProps) {
           className="text-center mb-14"
         >
           <p className="text-xs font-medium text-accent tracking-[0.2em] uppercase mb-3">
-            App Preview
+            {dict.showcase.label}
           </p>
           <h2 className="text-2xl sm:text-3xl font-bold text-text-primary tracking-tight">
-            See it in action
+            {dict.showcase.heading}
           </h2>
         </motion.div>
 

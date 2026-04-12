@@ -8,9 +8,12 @@ import type { AppData } from "@/lib/apps";
 
 interface AppLandingHeroProps {
   app: AppData;
+  dict: {
+    cta: { getOnGooglePlay: string; comingSoon: string };
+  };
 }
 
-export function AppLandingHero({ app }: AppLandingHeroProps) {
+export function AppLandingHero({ app, dict }: AppLandingHeroProps) {
   return (
     <section className="relative overflow-hidden">
       {/* Gradient background */}
@@ -66,12 +69,12 @@ export function AppLandingHero({ app }: AppLandingHeroProps) {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#1e4d3a] to-[#163d2e] px-7 py-3.5 text-sm font-semibold text-[#d0e8dc] transition-all hover:shadow-[0_4px_20px_rgba(30,77,58,0.4)] cursor-pointer"
                 >
-                  Get on Google Play
+                  {dict.cta.getOnGooglePlay}
                   <ExternalLink size={16} />
                 </a>
               ) : (
                 <span className="inline-flex items-center gap-2 rounded-xl bg-accent-subtle px-7 py-3.5 text-sm font-semibold text-accent border border-accent/20">
-                  Coming Soon
+                  {dict.cta.comingSoon}
                 </span>
               )}
             </div>

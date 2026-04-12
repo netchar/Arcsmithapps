@@ -4,11 +4,20 @@
     "about": "About"
   },
   "hero": {
+    "featured": "Featured App",
     "tagline": "Independent apps crafted with care."
   },
   "appGrid": {
     "label": "Our Apps",
     "heading": "Crafted with care"
+  },
+  "showcase": {
+    "label": "App Preview",
+    "heading": "See it in action"
+  },
+  "features": {
+    "moreLabel": "And more",
+    "moreHeading": "Everything you need"
   },
   "about": {
     "title": "About",
@@ -37,6 +46,8 @@
   "cta": {
     "learnMore": "Learn more",
     "comingSoon": "Coming Soon",
-    "getOnGooglePlay": "Get it on Google Play"
+    "comingSoonSub": "We'll let you know when it's ready",
+    "getOnGooglePlay": "Get it on Google Play",
+    "downloadOnGooglePlay": "Download on Google Play"
   }
 }

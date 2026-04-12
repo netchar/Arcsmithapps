@@ -6,9 +6,16 @@ import type { AppData } from "@/lib/apps";
 
 interface CtaBannerProps {
   app: AppData;
+  dict: {
+    cta: {
+      downloadOnGooglePlay: string;
+      comingSoon: string;
+      comingSoonSub: string;
+    };
+  };
 }
 
-export function CtaBanner({ app }: CtaBannerProps) {
+export function CtaBanner({ app, dict }: CtaBannerProps) {
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-t from-[#141e1a] to-transparent" />
@@ -36,16 +43,16 @@ export function CtaBanner({ app }: CtaBannerProps) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#1e4d3a] to-[#163d2e] px-8 py-4 text-base font-semibold text-[#d0e8dc] transition-all hover:shadow-[0_4px_20px_rgba(30,77,58,0.4)] cursor-pointer"
               >
-                Download on Google Play
+                {dict.cta.downloadOnGooglePlay}
                 <ExternalLink size={16} />
               </a>
             ) : (
               <div className="inline-flex flex-col items-center gap-2">
                 <span className="inline-flex items-center gap-2 rounded-xl bg-accent-subtle px-8 py-4 text-base font-semibold text-accent border border-accent/20">
-                  Coming Soon
+                  {dict.cta.comingSoon}
                 </span>
                 <p className="text-sm text-text-muted">
-                  We&apos;ll let you know when it&apos;s ready
+                  {dict.cta.comingSoonSub}
                 </p>
               </div>
             )}

@@ -4,18 +4,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { localePath } from "@/lib/locale-path";
 import type { AppData } from "@/lib/apps";
 
 interface AppCardProps {
   app: AppData;
+  lang: string;
 }
 
-export function AppCard({ app }: AppCardProps) {
+export function AppCard({ app, lang }: AppCardProps) {
   const previewScreenshots = app.screenshots.slice(0, 3);
 
   return (
     <Link
-      href={`/${app.slug}`}
+      href={localePath(lang, `/${app.slug}`)}
       className="group relative block rounded-3xl border border-border bg-bg-card overflow-hidden transition-all duration-500 hover:border-accent/30 hover:shadow-[0_24px_80px_rgba(30,77,58,0.15)] cursor-pointer"
     >
       {/* Background glow on hover */}

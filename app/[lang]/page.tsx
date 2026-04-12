@@ -18,7 +18,7 @@ export default async function HomePage({
 
   return (
     <div>
-      <FeaturedHero app={featured} />
+      <FeaturedHero app={featured} lang={lang} dict={dict} />
       <div className="mx-auto max-w-[1200px] px-6 py-24">
         <div className="text-center mb-12">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent mb-3">
@@ -28,7 +28,7 @@ export default async function HomePage({
             {dict.appGrid.heading}
           </h2>
         </div>
-        <AppGrid apps={apps} />
+        <AppGrid apps={apps} lang={lang} />
       </div>
     </div>
   );

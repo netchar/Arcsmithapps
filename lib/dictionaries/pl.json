@@ -4,11 +4,20 @@
     "about": "O nas"
   },
   "hero": {
+    "featured": "Polecana aplikacja",
     "tagline": "Niezależne aplikacje tworzone z troską."
   },
   "appGrid": {
     "label": "Nasze aplikacje",
     "heading": "Tworzone z troską"
+  },
+  "showcase": {
+    "label": "Podgląd aplikacji",
+    "heading": "Zobacz w akcji"
+  },
+  "features": {
+    "moreLabel": "I więcej",
+    "moreHeading": "Wszystko, czego potrzebujesz"
   },
   "about": {
     "title": "O nas",
@@ -37,6 +46,8 @@
   "cta": {
     "learnMore": "Dowiedz się więcej",
     "comingSoon": "Wkrótce",
-    "getOnGooglePlay": "Pobierz z Google Play"
+    "comingSoonSub": "Damy znać, gdy będzie gotowe",
+    "getOnGooglePlay": "Pobierz z Google Play",
+    "downloadOnGooglePlay": "Pobierz z Google Play"
   }
 }

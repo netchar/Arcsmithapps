@@ -51,7 +51,7 @@ export default async function LocaleLayout({
       <body className="bg-bg-primary text-text-primary antialiased">
         <Header lang={lang as Locale} dict={dict} />
         <main className="pt-14">{children}</main>
-        <Footer dict={dict} />
+        <Footer lang={lang as Locale} dict={dict} />
       </body>
     </html>
   );
