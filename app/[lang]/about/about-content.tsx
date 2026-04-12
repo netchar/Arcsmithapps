@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail, Shield, Smartphone, Lock } from "lucide-react";
+import { Mail, Shield, Smartphone, Heart } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface AboutContentProps {
@@ -35,22 +35,22 @@ const stagger = {
 const values: Record<string, { title: string; desc: string }[]> = {
   en: [
     { title: "Thoughtful design", desc: "Each app does one thing well" },
-    { title: "Privacy first", desc: "No tracking, ads, or unnecessary permissions" },
+    { title: "User-focused", desc: "Built for users, not investors" },
     { title: "Built to last", desc: "Modern tools, best practices" },
   ],
   pl: [
     { title: "Przemy\u015blany design", desc: "Ka\u017cda aplikacja robi jedn\u0105 rzecz dobrze" },
-    { title: "Prywatno\u015b\u0107 przede wszystkim", desc: "\u017badnego \u015bledzenia, reklam ani zb\u0119dnych uprawnie\u0144" },
+    { title: "Dla u\u017cytkownik\u00f3w", desc: "Tworzone dla ludzi, nie inwestor\u00f3w" },
     { title: "Stworzone na lata", desc: "Nowoczesne narz\u0119dzia, najlepsze praktyki" },
   ],
   ru: [
     { title: "\u041f\u0440\u043e\u0434\u0443\u043c\u0430\u043d\u043d\u044b\u0439 \u0434\u0438\u0437\u0430\u0439\u043d", desc: "\u041a\u0430\u0436\u0434\u043e\u0435 \u043f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u0435 \u0434\u0435\u043b\u0430\u0435\u0442 \u043e\u0434\u043d\u0443 \u0432\u0435\u0449\u044c \u0445\u043e\u0440\u043e\u0448\u043e" },
-    { title: "\u041f\u0440\u0438\u0432\u0430\u0442\u043d\u043e\u0441\u0442\u044c \u043f\u0440\u0435\u0436\u0434\u0435 \u0432\u0441\u0435\u0433\u043e", desc: "\u041d\u0438\u043a\u0430\u043a\u043e\u0433\u043e \u0442\u0440\u0435\u043a\u0438\u043d\u0433\u0430, \u0440\u0435\u043a\u043b\u0430\u043c\u044b \u0438\u043b\u0438 \u043b\u0438\u0448\u043d\u0438\u0445 \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043d\u0438\u0439" },
+    { title: "\u0414\u043b\u044f \u043f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u0435\u0439", desc: "\u0421\u043e\u0437\u0434\u0430\u043d\u043e \u0434\u043b\u044f \u043b\u044e\u0434\u0435\u0439, \u0430 \u043d\u0435 \u0438\u043d\u0432\u0435\u0441\u0442\u043e\u0440\u043e\u0432" },
     { title: "\u0421\u043e\u0437\u0434\u0430\u043d\u043e \u043d\u0430\u0434\u043e\u043b\u0433\u043e", desc: "\u0421\u043e\u0432\u0440\u0435\u043c\u0435\u043d\u043d\u044b\u0435 \u0438\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u044b, \u043b\u0443\u0447\u0448\u0438\u0435 \u043f\u0440\u0430\u043a\u0442\u0438\u043a\u0438" },
   ],
 };
 
-const valueIcons = [Smartphone, Lock, Shield];
+const valueIcons = [Smartphone, Heart, Shield];
 
 export function AboutContent({ lang, dict }: AboutContentProps) {
   const localValues = values[lang] ?? values.en;
