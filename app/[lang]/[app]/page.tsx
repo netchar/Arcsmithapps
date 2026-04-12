@@ -7,18 +7,22 @@ import { FeatureSpotlight } from "@/components/sections/FeatureSpotlight";
 import { FeatureGrid } from "@/components/sections/FeatureGrid";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { AppLegal } from "@/components/sections/AppLegal";
+import { hasLocale, locales } from "@/lib/i18n";
 
 interface PageProps {
-  params: Promise<{ app: string }>;
+  params: Promise<{ lang: string; app: string }>;
 }
 
 export async function generateStaticParams() {
-  return getAllAppSlugs().map((app) => ({ app }));
+  const slugs = getAllAppSlugs();
+  return locales.flatMap((lang) => slugs.map((app) => ({ lang, app })));
 }
 
 export const dynamicParams = false;
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { app: slug } = await params;
   const app = getApp(slug);
   if (!app) return { title: "Not Found" };
@@ -30,25 +34,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function AppPage({ params }: PageProps) {
-  const { app: slug } = await params;
+  const { lang, app: slug } = await params;
+  if (!hasLocale(lang)) notFound();
+
   const app = getApp(slug);
   if (!app) notFound();
 
-  // Split features: first 3 get spotlights, rest go in grid
   const spotlightFeatures = app.features.slice(0, 3);
   const gridFeatures = app.features.slice(3);
 
   return (
     <div>
-      {/* Section 1: Full-width hero */}
       <AppLandingHero app={app} />
-
-      {/* Section 2: Showcase strip with scrollable cards */}
       {app.showcase.length > 0 && (
         <ShowcaseStrip showcase={app.showcase} appName={app.name} />
       )}
-
-      {/* Section 3: Feature spotlights — alternating layout */}
       {spotlightFeatures.length > 0 && (
         <FeatureSpotlight
           features={spotlightFeatures}
@@ -56,17 +56,9 @@ export default async function AppPage({ params }: PageProps) {
           appName={app.name}
         />
       )}
-
-      {/* Section 4: Remaining features in grid */}
-      {gridFeatures.length > 0 && (
-        <FeatureGrid features={gridFeatures} />
-      )}
-
-      {/* Section 5: CTA Banner */}
+      {gridFeatures.length > 0 && <FeatureGrid features={gridFeatures} />}
       <CtaBanner app={app} />
-
-      {/* Section 6: Legal links */}
-      <AppLegal appSlug={app.slug} appName={app.name} />
+      <AppLegal appSlug={app.slug} appName={app.name} lang={lang} />
     </div>
   );
 }
