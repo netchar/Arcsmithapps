@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "home": "Strona główna",
+    "about": "O nas"
+  },
+  "hero": {
+    "tagline": "Niezależne aplikacje tworzone z troską."
+  },
+  "appGrid": {
+    "label": "Nasze aplikacje",
+    "heading": "Tworzone z troską"
+  },
+  "about": {
+    "title": "O nas",
+    "heroHeadline": "Tworzone przez jednego programistę. Zaprojektowane dla wszystkich.",
+    "paragraphs": [
+      "ArcSmith Apps to niezależne studio aplikacji z siedzibą w Warszawie. Tworzymy przemyślane aplikacje mobilne, w których prywatność jest priorytetem — każda zaprojektowana tak, by robić jedną rzecz dobrze.",
+      "Za ArcSmith stoi programista z ponad 13-letnim doświadczeniem w inżynierii oprogramowania. Każda aplikacja powstaje z wykorzystaniem nowoczesnych narzędzi i najlepszych praktyk — na poziomie, jakiego oczekiwałbyś od większego zespołu.",
+      "Wierzymy, że świetne aplikacje nie muszą Cię śledzić, wyświetlać reklam ani prosić o zbędne uprawnienia. Nasze aplikacje szanują Twoją prywatność i są tworzone z myślą o trwałości."
+    ],
+    "contact": {
+      "heading": "Kontakt",
+      "email": "support@arcsmithapps.com",
+      "entity": "ArcSmith Apps — Warszawa, Polska",
+      "nip": "NIP: 8952251825"
+    }
+  },
+  "footer": {
+    "tagline": "Niezależne aplikacje tworzone z troską.",
+    "copyright": "ArcSmith Apps"
+  },
+  "legal": {
+    "privacyPolicy": "Polityka prywatności",
+    "terms": "Regulamin",
+    "backTo": "Powrót do"
+  },
+  "cta": {
+    "learnMore": "Dowiedz się więcej",
+    "comingSoon": "Wkrótce",
+    "getOnGooglePlay": "Pobierz z Google Play"
+  }
+}

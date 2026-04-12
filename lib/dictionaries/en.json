@@ -1,0 +1,42 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About"
+  },
+  "hero": {
+    "tagline": "Independent apps crafted with care."
+  },
+  "appGrid": {
+    "label": "Our Apps",
+    "heading": "Crafted with care"
+  },
+  "about": {
+    "title": "About",
+    "heroHeadline": "Built by one developer. Designed for everyone.",
+    "paragraphs": [
+      "ArcSmith Apps is an independent app studio based in Warsaw, Poland. We build thoughtful, privacy-first mobile applications — each designed to do one thing well.",
+      "Behind ArcSmith is a developer with over 13 years of experience in software engineering. Every app is built with modern tools and best practices — following the same standards you'd expect from a larger team.",
+      "We believe great apps don't need to track you, push ads, or ask for unnecessary permissions. Our apps respect your privacy and are built to last."
+    ],
+    "contact": {
+      "heading": "Contact",
+      "email": "support@arcsmithapps.com",
+      "entity": "ArcSmith Apps — Warsaw, Poland",
+      "nip": "NIP: 8952251825"
+    }
+  },
+  "footer": {
+    "tagline": "Independent apps crafted with care.",
+    "copyright": "ArcSmith Apps"
+  },
+  "legal": {
+    "privacyPolicy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "backTo": "Back to"
+  },
+  "cta": {
+    "learnMore": "Learn more",
+    "comingSoon": "Coming Soon",
+    "getOnGooglePlay": "Get it on Google Play"
+  }
+}
