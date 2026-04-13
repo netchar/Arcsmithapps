@@ -23,7 +23,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { app, doc } = await params;
-  const legalDoc = getLegalDoc(app, doc);
+  const legalDoc = getLegalDoc(app, doc, "en");
   if (!legalDoc) return { title: "Not Found" };
 
   return {
@@ -37,7 +37,7 @@ export default async function LegalPage({ params }: PageProps) {
   if (!hasLocale(lang)) notFound();
 
   const dict = await getDictionary(lang as Locale);
-  const legalDoc = getLegalDoc(app, doc);
+  const legalDoc = getLegalDoc(app, doc, lang);
   if (!legalDoc) notFound();
 
   const { content, frontmatter } = legalDoc;

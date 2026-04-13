@@ -13,7 +13,7 @@ export default async function HomePage({
   if (!hasLocale(lang)) notFound();
 
   const dict = await getDictionary(lang as Locale);
-  const apps = getAllApps();
+  const apps = getAllApps(lang);
   const featured = apps.find((a) => a.featured) ?? apps[0];
 
   return (

@@ -24,7 +24,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { app: slug } = await params;
-  const app = getApp(slug);
+  const app = getApp(slug, "en");
   if (!app) return { title: "Not Found" };
 
   return {
@@ -38,7 +38,7 @@ export default async function AppPage({ params }: PageProps) {
   if (!hasLocale(lang)) notFound();
 
   const dict = await getDictionary(lang as Locale);
-  const app = getApp(slug);
+  const app = getApp(slug, lang);
   if (!app) notFound();
 
   const spotlightFeatures = app.features.slice(0, 3);

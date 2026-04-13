@@ -33,9 +33,17 @@ export interface AppData {
   description: string;
 }
 
-export function getApp(slug: string): AppData | null {
-  const filePath = path.join(APPS_DIR, `${slug}.mdx`);
-  if (!fs.existsSync(filePath)) return null;
+function resolveFile(slug: string, locale: string = "en"): string | null {
+  const localized = path.join(APPS_DIR, `${slug}.${locale}.mdx`);
+  if (fs.existsSync(localized)) return localized;
+  const fallback = path.join(APPS_DIR, `${slug}.en.mdx`);
+  if (fs.existsSync(fallback)) return fallback;
+  return null;
+}
+
+export function getApp(slug: string, locale: string = "en"): AppData | null {
+  const filePath = resolveFile(slug, locale);
+  if (!filePath) return null;
 
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
@@ -47,15 +55,15 @@ export function getApp(slug: string): AppData | null {
   };
 }
 
-export function getAllApps(): AppData[] {
+export function getAllApps(locale: string = "en"): AppData[] {
   if (!fs.existsSync(APPS_DIR)) return [];
 
   return fs
     .readdirSync(APPS_DIR)
-    .filter((f) => f.endsWith(".mdx"))
+    .filter((f) => f.endsWith(".en.mdx"))
     .map((f) => {
-      const slug = f.replace(".mdx", "");
-      return getApp(slug)!;
+      const slug = f.replace(".en.mdx", "");
+      return getApp(slug, locale)!;
     })
     .sort((a, b) => a.order - b.order);
 }
@@ -65,6 +73,6 @@ export function getAllAppSlugs(): string[] {
 
   return fs
     .readdirSync(APPS_DIR)
-    .filter((f) => f.endsWith(".mdx"))
-    .map((f) => f.replace(".mdx", ""));
+    .filter((f) => f.endsWith(".en.mdx"))
+    .map((f) => f.replace(".en.mdx", ""));
 }

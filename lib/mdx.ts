@@ -13,9 +13,17 @@ export interface LegalDoc {
   };
 }
 
-export function getLegalDoc(app: string, doc: string): LegalDoc | null {
-  const filePath = path.join(LEGAL_DIR, app, `${doc}.mdx`);
-  if (!fs.existsSync(filePath)) return null;
+function resolveFile(app: string, doc: string, locale: string = "en"): string | null {
+  const localized = path.join(LEGAL_DIR, app, `${doc}.${locale}.mdx`);
+  if (fs.existsSync(localized)) return localized;
+  const fallback = path.join(LEGAL_DIR, app, `${doc}.en.mdx`);
+  if (fs.existsSync(fallback)) return fallback;
+  return null;
+}
+
+export function getLegalDoc(app: string, doc: string, locale: string = "en"): LegalDoc | null {
+  const filePath = resolveFile(app, doc, locale);
+  if (!filePath) return null;
 
   const raw = fs.readFileSync(filePath, "utf-8");
   const { content, data } = matter(raw);
@@ -37,8 +45,8 @@ export function getAllLegalPaths(): { app: string; doc: string }[] {
 
     const docs = fs.readdirSync(appDir);
     for (const doc of docs) {
-      if (doc.endsWith(".mdx")) {
-        paths.push({ app, doc: doc.replace(".mdx", "") });
+      if (doc.endsWith(".en.mdx")) {
+        paths.push({ app, doc: doc.replace(".en.mdx", "") });
       }
     }
   }
