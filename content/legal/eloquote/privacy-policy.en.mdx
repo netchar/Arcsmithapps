@@ -1,6 +1,6 @@
 ---
 title: Privacy Policy
-lastUpdated: "April 10, 2026"
+lastUpdated: "April 16, 2026"
 appName: Eloquote
 ---
 
@@ -35,6 +35,15 @@ When you purchase or restore a premium subscription, the following information i
 
 We do not collect or store your name, email address, payment card details, or Google account credentials. All payment processing is handled by Google Play.
 
+## Analytics and Crash Reporting
+
+In release builds, we use Firebase Analytics and Firebase Crashlytics (both Google services) to understand how Eloquote is used and to diagnose failures:
+
+- Firebase Analytics records app interaction events such as which screens you open, when you save or share a quote, widget and notification setting changes, and paywall actions. Alongside those events, four per-install properties describe the installation: your premium status ("pro" / "free"), the selected theme mode, the selected app language, and the number of widgets currently placed on your home screen. Data is linked only to a Firebase-generated installation identifier that resets if you clear app data or uninstall the app.
+- Firebase Crashlytics records crash reports, application-not-responding events, and short breadcrumb logs describing what actions preceded a crash. The reports include device model, OS version, app version, and three diagnostic values: the name of the most recent event, the name of the most recently viewed screen, and the local database schema version.
+
+We do not attach your name, email address, quote text, search terms, or any account identifier to these events. Both services are disabled in debug builds used during development. Neither service is shared with advertising networks; Eloquote integrates no advertising SDKs.
+
 ## Permissions
 
 Eloquote requests the following Android permissions:
@@ -46,6 +55,7 @@ Eloquote requests the following Android permissions:
 
 - Verify your subscription status and deliver premium features
 - Process subscription purchases and restorations through Google Play and RevenueCat
+- Understand how Eloquote is used in aggregate and diagnose crashes, through Firebase Analytics and Firebase Crashlytics in release builds
 - Provide daily quote notifications and home-screen widgets based on your local preferences
 - Comply with legal obligations where applicable
 
@@ -58,7 +68,7 @@ Eloquote allows you to share quotes to other apps using Android's standard shari
 If you are in the EEA, Switzerland, or the United Kingdom, we rely on the following legal bases:
 
 - **Performance of a contract** — when we provide the app, subscription features, and requested functionality
-- **Legitimate interests** — for subscription fraud prevention and service integrity
+- **Legitimate interests** — for subscription fraud prevention, service integrity, and understanding app usage and diagnosing crashes through aggregate analytics
 - **Consent** — for delivering notifications when you grant notification permission
 - **Compliance with legal obligations** — such as tax and consumer protection duties
 
