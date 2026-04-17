@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { localePath } from "@/lib/locale-path";
 import type { Dictionary } from "@/lib/i18n";
+import { BrandMark } from "@/components/ui/BrandMark";
 
 interface FooterProps {
   lang: string;
@@ -14,9 +15,12 @@ export function Footer({ lang, dict }: FooterProps) {
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           <Link
             href={localePath(lang, "/")}
-            className="text-lg font-bold text-text-primary"
+            className="flex items-center gap-2 text-lg font-bold text-text-primary"
           >
-            ArcSmith<span className="text-accent">.</span>
+            <BrandMark size={22} className="text-accent" title="ArcSmith" />
+            <span>
+              ArcSmith<span className="text-accent">.</span>
+            </span>
           </Link>
           <p className="text-xs text-text-muted">
             &copy; {new Date().getFullYear()} {dict.footer.copyright}.{" "}
