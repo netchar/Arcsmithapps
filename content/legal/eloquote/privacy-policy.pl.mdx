@@ -1,6 +1,6 @@
 ---
 title: Polityka prywatności
-lastUpdated: "April 10, 2026"
+lastUpdated: "April 16, 2026"
 appName: Eloquote
 ---
 
@@ -35,6 +35,15 @@ Podczas zakupu lub przywracania subskrypcji premium następujące informacje są
 
 Nie zbieramy ani nie przechowujemy Twojego imienia, adresu e-mail, danych karty płatniczej ani danych logowania do konta Google. Całość przetwarzania płatności jest obsługiwana przez Google Play.
 
+## Analityka i raportowanie awarii
+
+W kompilacjach produkcyjnych używamy Firebase Analytics i Firebase Crashlytics (obie usługi należą do Google), aby rozumieć sposób korzystania z Eloquote i diagnozować awarie:
+
+- Firebase Analytics rejestruje zdarzenia interakcji z aplikacją, takie jak otwierane ekrany, zapisywanie lub udostępnianie cytatu, zmiany ustawień widżetów i powiadomień oraz działania na ekranie zakupu premium. Wraz z tymi zdarzeniami cztery właściwości przypisane do instalacji opisują samą instalację: Twój status premium („pro" / „free"), wybrany tryb motywu, wybrany język aplikacji oraz liczbę widżetów aktualnie umieszczonych na ekranie głównym. Dane są powiązane wyłącznie z wygenerowanym przez Firebase identyfikatorem instalacji, który jest resetowany przy wyczyszczeniu danych aplikacji lub jej odinstalowaniu.
+- Firebase Crashlytics rejestruje raporty awarii, zdarzenia typu „aplikacja nie odpowiada" oraz krótkie logi okruszkowe (breadcrumbs) opisujące działania poprzedzające awarię. Raporty zawierają model urządzenia, wersję systemu operacyjnego, wersję aplikacji oraz trzy wartości diagnostyczne: nazwę ostatniego zdarzenia, nazwę ostatnio wyświetlanego ekranu oraz wersję schematu lokalnej bazy danych.
+
+Do tych zdarzeń nie dołączamy Twojego imienia, adresu e-mail, treści cytatów, zapytań wyszukiwania ani żadnego identyfikatora konta. Obie usługi są wyłączone w kompilacjach debugowych używanych podczas rozwoju. Żadna z nich nie jest udostępniana sieciom reklamowym; Eloquote nie integruje żadnych SDK reklamowych.
+
 ## Uprawnienia
 
 Eloquote wymaga następujących uprawnień Android:
@@ -46,6 +55,7 @@ Eloquote wymaga następujących uprawnień Android:
 
 - Weryfikacja statusu subskrypcji i dostarczanie funkcji premium
 - Przetwarzanie zakupów i przywracania subskrypcji przez Google Play i RevenueCat
+- Rozumienie sposobu korzystania z Eloquote w ujęciu zbiorczym i diagnozowanie awarii za pomocą Firebase Analytics i Firebase Crashlytics w kompilacjach produkcyjnych
 - Dostarczanie codziennych powiadomień z cytatami i widżetów ekranu głównego na podstawie Twoich lokalnych preferencji
 - Spełnianie obowiązków prawnych, jeśli ma to zastosowanie
 
@@ -58,7 +68,7 @@ Eloquote umożliwia udostępnianie cytatów innym aplikacjom za pomocą standard
 Jeśli znajdujesz się w EOG, Szwajcarii lub Wielkiej Brytanii, opieramy się na następujących podstawach prawnych:
 
 - **Wykonanie umowy** — gdy zapewniamy dostęp do aplikacji, funkcji subskrypcji i żądanej funkcjonalności
-- **Prawnie uzasadnione interesy** — w celu zapobiegania oszustwom subskrypcyjnym i zapewnienia integralności usługi
+- **Prawnie uzasadnione interesy** — w celu zapobiegania oszustwom subskrypcyjnym, zapewnienia integralności usługi oraz rozumienia korzystania z aplikacji i diagnozowania awarii poprzez zbiorczą analitykę
 - **Zgoda** — na dostarczanie powiadomień po udzieleniu przez Ciebie zgody na powiadomienia
 - **Wypełnianie obowiązków prawnych** — takich jak obowiązki podatkowe i ochrony konsumentów
 
