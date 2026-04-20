@@ -86,7 +86,7 @@ interface StarFieldProps {
 **Behavior**
 
 - Renders a full-coverage absolutely-positioned `<div>` with `aria-hidden="true"` and `pointer-events-none`.
-- Renders exactly `count` decorative `<span>` elements (default `18`).
+- Renders up to `count` decorative `<span>` elements (default `18`). `count` behaves as a **cap**, not a generator target — see clamp rule below.
 - Star positions come from a hardcoded `STARS` constant in the same module — not runtime `Math.random()`. This guarantees SSR/CSR parity, zero hydration warnings, and lets the designer hand-tune the pattern.
 - Each star is 1.5 × 1.5 px, `border-radius: 50%`, `background: #e8f0ec`, with `box-shadow: 0 0 2px rgba(232,240,236,0.4)`. Per-star `opacity` drawn from the `STARS` array, range `0.18–0.40`.
 - No transitions, no keyframe animations, no canvas.
@@ -156,7 +156,7 @@ interface AnimatedBrandMarkProps {
 | 150–550 | `#orbit` | `pathLength` | 0 → 1 |
 | 450–700 | `#crescent`, `#drop` | `opacity`, `scale` | `0, 0.85` → `1, 1` |
 
-During stroke-draw, `#spark` and `#orbit` are rendered as `fill: transparent; stroke: currentColor; stroke-width: 2`. On animation complete, they swap to `fill: currentColor; stroke: none` instantly. All four paths end at `opacity: 1`.
+During stroke-draw, `#spark` and `#orbit` are rendered as `fill: transparent; stroke: currentColor; stroke-width: 2`. The fill/stroke swap (`fill: currentColor; stroke: none`) is applied **per path** the moment that path's `pathLength` reaches 1 — so `#spark` swaps at t≈500ms, `#orbit` at t≈550ms. This avoids a visible "outline → filled" flash at the global end. All four paths end at `opacity: 1`.
 
 **sessionStorage semantics**
 
@@ -239,8 +239,8 @@ The script documents reproducibility. It is not invoked during Next.js build.
 File: `tests/e2e/space-theme.spec.ts`
 
 1. Load home page in a fresh browser context.
-2. Within 1s, assert the four logo paths reach `opacity=1` and dash-offset=0.
-3. Reload the page; assert the logo paths are `opacity=1` immediately (no animation replay).
+2. Within 1s, assert the four logo paths are in their final state: `opacity=1` on all four, and `#spark`/`#orbit` have computed `fill` = rendered text color (post-swap), not `transparent`. (Asserting on `stroke-dashoffset` is **not** reliable because §5.3 swaps each path to `stroke: none` on completion.)
+3. Reload the page; assert the logo paths are in their final state immediately (no animation replay).
 4. Open a new browser context; animation plays again.
 
 ### 9.3 Build verification
