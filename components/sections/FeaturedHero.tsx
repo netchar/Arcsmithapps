@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { PhoneMockup } from "@/components/ui/PhoneMockup";
+import { StarField } from "@/components/ui/StarField";
 import { localePath } from "@/lib/locale-path";
 import type { AppData } from "@/lib/apps";
 
@@ -22,6 +23,7 @@ export function FeaturedHero({ app, lang, dict }: FeaturedHeroProps) {
       {/* Background gradient + glow */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#141e1a] via-bg-primary to-[#111a16]" />
       <div className="pointer-events-none absolute top-[-200px] left-[-100px] w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(30,77,58,0.12)_0%,transparent_70%)]" />
+      <StarField />
       <div className="pointer-events-none absolute bottom-[-150px] right-[-100px] w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,rgba(30,77,58,0.08)_0%,transparent_70%)]" />
 
       <div className="relative mx-auto max-w-[1200px] px-6 py-24 sm:py-32">
