@@ -2,11 +2,11 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Add a restrained cosmic atmosphere to arcsmithapps.com — a static starfield behind the home hero plus a one-shot session-scoped entrance animation for the brand mark based on `docs/logo3.svg`.
+**Goal:** Add a restrained cosmic atmosphere to arcsmithapps.com — a static starfield behind the home hero, and replace the PNG brand mark with an inline SVG (`logo3.svg`) rendered statically in header and footer. No animations of any kind.
 
-**Architecture:** Three new client-safe UI primitives (`LogoMark`, `StarField`, `AnimatedBrandMark`) plugged into two existing components (`Header`, `FeaturedHero`). No new npm dependencies — `framer-motion` is already in the bundle. Animation honors `prefers-reduced-motion` and runs at most once per browser tab session (sessionStorage flag). The old PNG-based `BrandMark` is deleted along with its asset.
+**Architecture:** Two new client-safe UI primitives (`LogoMark`, `StarField`) plugged into three existing components (`Header`, `Footer`, `FeaturedHero`). No new npm dependencies. The old PNG-based `BrandMark` is deleted along with its asset.
 
-**Tech Stack:** Next.js 16 (App Router) · React 19 · TypeScript 5 · Tailwind v4 · framer-motion 12 · inline SVG
+**Tech Stack:** Next.js 16 (App Router) · React 19 · TypeScript 5 · Tailwind v4 · inline SVG
 
 **Spec:** `docs/superpowers/specs/2026-04-20-space-theme-design.md`
 
@@ -21,14 +21,13 @@
 |------|----------------|
 | `components/ui/LogoMark.tsx` | Inline SVG of the logo. Static, server-safe. |
 | `components/ui/StarField.tsx` | Decorative starfield for hero. Static, server-safe. |
-| `components/ui/AnimatedBrandMark.tsx` | Client component. One-shot stroke-draw entrance, reduced-motion aware. |
 | `scripts/generate-favicon.sh` | One-shot reproducibility script for `app/favicon.ico`. |
 
 ### Modified files
 | Path | Change |
 |------|--------|
-| `components/layout/Header.tsx` | Swap `BrandMark` → `AnimatedBrandMark` |
-| `components/layout/Footer.tsx` | Swap `BrandMark` → `AnimatedBrandMark` |
+| `components/layout/Header.tsx` | Swap `BrandMark` → `LogoMark` |
+| `components/layout/Footer.tsx` | Swap `BrandMark` → `LogoMark` |
 | `components/sections/FeaturedHero.tsx` | Render `<StarField />` between the two radial-glow layers |
 | `app/icon.svg` | Overwritten with optimized `logo3.svg` (hardcoded `#e8f0ec`) |
 | `app/favicon.ico` | Regenerated from `logo3.svg` via `scripts/generate-favicon.sh` |
@@ -36,7 +35,7 @@
 ### Deleted files
 | Path | Reason |
 |------|--------|
-| `components/ui/BrandMark.tsx` | Superseded by `AnimatedBrandMark` |
+| `components/ui/BrandMark.tsx` | Superseded by `LogoMark` |
 | `public/brand/mark.png` | Only consumed by `BrandMark` — no consumers left |
 
 ---
@@ -57,16 +56,15 @@ interface LogoMarkProps {
   title?: string;
   className?: string;
   style?: CSSProperties;
-  pathIds?: boolean;
 }
 
 const VIEWBOX = "0 0 816 832";
 
 const PATHS = {
-  spark:
-    "M336.056091,547.063843 C325.595367,557.608826 314.429108,566.779358 302.875183,575.503296 C291.482056,584.105896 279.330597,591.555237 266.518951,598.707703 C271.927948,605.439819 278.254364,610.030212 284.425018,614.716309 C306.182434,631.239319 330.301300,642.734070 357.172638,648.165161 C367.436005,650.239502 377.880188,650.917175 388.293945,651.541382 C392.191589,651.774902 393.557617,652.901001 393.409729,656.791504 C393.163086,663.281128 393.154663,669.794189 393.408051,676.283203 C393.562256,680.233154 392.162231,681.472412 388.234467,681.415039 C367.138824,681.106812 346.716858,677.224670 326.671692,670.787170 C293.638885,660.178650 265.328278,642.163818 241.738419,616.821228 C237.526749,612.296570 233.441422,611.418030 227.297180,611.871948 C210.848755,613.087280 195.750717,608.193115 182.731232,597.911560 C178.402100,594.492859 173.426529,591.419556 170.986755,585.101440 C176.859528,584.469788 182.411087,584.318298 187.845016,583.234497 C216.020584,577.614746 241.299576,565.234924 265.468201,550.236938 C296.822754,530.779724 324.279816,506.552490 349.010101,479.430115 C383.751190,441.328583 411.679810,398.463196 434.122284,352.042999 C445.501343,328.506561 455.535339,304.420471 463.530670,279.506836 C464.785431,275.596863 466.108582,271.682007 468.468689,268.014893 C471.054749,269.441681 470.413757,271.669739 470.209290,273.411713 C465.998962,309.282623 458.393250,344.310760 446.026459,378.377380 C435.534943,407.278198 422.356598,434.814667 406.323578,460.906647 C391.246857,485.442322 373.798157,508.284485 354.019897,529.365967 C348.318512,535.442993 342.393188,541.179871 336.056091,547.063843 Z",
   orbit:
     "M598.661499,463.845581 C598.826538,454.925751 599.539062,446.562134 598.961914,438.009766 C597.746338,419.999268 594.526855,402.485748 589.172791,385.341003 C587.805298,380.962189 587.913757,378.143921 592.102783,375.320404 C599.309875,370.462585 605.035156,364.003937 609.226562,354.849518 C613.766418,364.722107 616.967773,373.522583 619.742432,382.513306 C626.512146,404.449341 629.579224,427.009186 629.085938,449.817627 C628.315918,485.416229 620.974976,519.711548 604.461914,551.556091 C583.091125,592.768616 552.162537,625.057434 512.321716,648.864136 C509.509430,650.544678 504.710449,650.787598 504.208069,654.012390 C503.540649,658.296570 502.535828,662.906677 503.726196,667.342468 C504.588226,670.554749 504.192139,673.591492 503.330658,676.679138 C501.580536,682.951965 498.280334,685.066528 491.344177,684.306763 C486.123932,683.734924 482.718750,679.816040 482.686798,673.986755 C482.613922,660.685547 482.701416,647.383484 482.647644,634.082153 C482.438080,582.266296 482.146149,530.450684 482.068085,478.634766 C482.061646,474.370850 480.630920,472.088287 476.967346,470.066223 C463.709717,462.748810 459.782928,450.723297 461.802521,436.597473 C463.650879,423.669647 471.682312,415.431396 483.966431,411.541534 C499.368134,406.664551 516.330811,414.588379 522.367737,429.178070 C529.192383,445.671539 523.214111,463.344269 507.959961,470.959320 C504.902863,472.485474 504.092194,474.386322 503.975922,477.554443 C503.169220,499.535339 503.370453,521.521973 503.331818,543.508057 C503.323914,547.997742 504.038635,552.375610 504.740479,557.180847 C514.739807,554.124756 522.177368,547.715027 529.269836,541.040466 C542.708496,528.393677 549.479553,512.141052 551.497375,494.240387 C556.005249,454.248505 552.768494,414.056366 553.665466,373.962341 C553.722900,371.394653 552.606506,370.208038 550.252686,369.223938 C534.808289,362.766754 526.495361,347.626556 528.738892,330.421082 C530.636108,315.871796 542.860046,303.106812 558.045166,300.899597 C581.926392,297.428436 601.133972,315.186432 599.512634,338.688721 C598.559998,352.497986 591.324280,362.002380 579.601440,368.225342 C575.813904,370.235931 574.922119,372.536407 574.948853,376.396515 C575.162231,407.224854 575.656128,438.061279 575.166077,468.880920 C574.841064,489.317047 572.789856,509.605042 563.773438,528.590881 C552.224060,552.910400 534.187683,570.117737 509.082672,579.668213 C504.541473,581.395813 503.154297,583.556763 503.221924,588.254822 C503.362946,598.053284 503.642456,607.821472 504.648956,618.335571 C510.570129,614.836609 515.939697,611.408997 520.934448,607.351624 C556.160889,578.736328 581.047485,543.208374 592.823914,499.087067 C595.855286,487.729797 597.817383,476.091766 598.661499,463.845581 M551.710510,324.208191 C546.937927,329.382019 545.286438,335.286163 547.786316,342.018585 C550.289978,348.761200 555.652893,352.071594 562.366516,353.374481 C571.927917,355.229950 583.381653,343.536377 581.305908,334.078247 C578.302551,320.393250 563.867859,313.079041 551.710510,324.208191 M500.593506,429.809387 C495.967499,426.755554 491.272491,426.967194 486.507050,429.476501 C480.304779,432.742462 477.175354,440.917297 479.690125,447.309113 C482.411102,454.225128 489.918274,458.804779 496.715576,456.724487 C502.625153,454.915955 506.082092,450.849121 507.412781,445.331726 C508.904938,439.144714 506.560211,433.915558 500.593506,429.809387 Z",
+  spark:
+    "M336.056091,547.063843 C325.595367,557.608826 314.429108,566.779358 302.875183,575.503296 C291.482056,584.105896 279.330597,591.555237 266.518951,598.707703 C271.927948,605.439819 278.254364,610.030212 284.425018,614.716309 C306.182434,631.239319 330.301300,642.734070 357.172638,648.165161 C367.436005,650.239502 377.880188,650.917175 388.293945,651.541382 C392.191589,651.774902 393.557617,652.901001 393.409729,656.791504 C393.163086,663.281128 393.154663,669.794189 393.408051,676.283203 C393.562256,680.233154 392.162231,681.472412 388.234467,681.415039 C367.138824,681.106812 346.716858,677.224670 326.671692,670.787170 C293.638885,660.178650 265.328278,642.163818 241.738419,616.821228 C237.526749,612.296570 233.441422,611.418030 227.297180,611.871948 C210.848755,613.087280 195.750717,608.193115 182.731232,597.911560 C178.402100,594.492859 173.426529,591.419556 170.986755,585.101440 C176.859528,584.469788 182.411087,584.318298 187.845016,583.234497 C216.020584,577.614746 241.299576,565.234924 265.468201,550.236938 C296.822754,530.779724 324.279816,506.552490 349.010101,479.430115 C383.751190,441.328583 411.679810,398.463196 434.122284,352.042999 C445.501343,328.506561 455.535339,304.420471 463.530670,279.506836 C464.785431,275.596863 466.108582,271.682007 468.468689,268.014893 C471.054749,269.441681 470.413757,271.669739 470.209290,273.411713 C465.998962,309.282623 458.393250,344.310760 446.026459,378.377380 C435.534943,407.278198 422.356598,434.814667 406.323578,460.906647 C391.246857,485.442322 373.798157,508.284485 354.019897,529.365967 C348.318512,535.442993 342.393188,541.179871 336.056091,547.063843 Z",
   planet:
     "M541.350830,250.947784 C537.321350,267.439575 526.440979,278.288086 513.886475,288.435974 C510.810883,284.189087 510.190948,279.665894 508.886871,275.492493 C505.918182,265.991943 503.191101,256.406677 500.716797,246.765747 C499.800995,243.197495 498.283936,243.136597 495.380066,244.267731 C482.512421,249.279968 469.245880,252.994858 455.733490,255.777344 C452.415680,256.460541 449.071228,257.833435 444.811737,256.783966 C449.244904,242.989456 456.572662,230.724854 462.236328,216.774490 C444.568146,215.105133 427.144714,213.458878 410.021362,211.841003 C409.222473,209.654144 410.215729,208.685181 411.059021,207.662796 C419.969635,196.859741 429.140808,186.400055 441.981140,179.915298 C450.575500,175.574890 459.584229,172.976624 469.168152,172.744904 C472.594299,172.662079 474.108826,171.297012 475.319336,168.264450 C491.851227,126.848862 522.727234,103.024231 566.073120,94.621559 C568.505615,94.150024 570.982727,93.908859 573.438599,93.557190 C579.386841,92.705421 580.267639,93.227333 581.268250,99.090118 C587.099609,133.258881 580.499756,164.712631 560.655701,193.287704 C557.037537,198.497864 553.510559,203.815918 548.415283,207.666656 C541.876221,212.608566 540.465149,218.738708 542.473206,226.422607 C544.579285,234.481903 543.301514,242.562241 541.350830,250.947784 M536.794067,131.227356 C528.092102,134.766510 524.346252,141.928436 527.116882,149.729874 C529.806763,157.303879 537.707581,161.521210 545.042542,159.298187 C552.141296,157.146774 557.035217,149.074081 555.486877,142.069733 C553.796143,134.420715 545.683167,129.408585 536.794067,131.227356 Z",
   drop:
@@ -82,7 +80,6 @@ export function LogoMark({
   title,
   className,
   style,
-  pathIds = false,
 }: LogoMarkProps) {
   const labelled = Boolean(title);
   return (
@@ -98,17 +95,15 @@ export function LogoMark({
       aria-hidden={labelled ? undefined : true}
       fill="currentColor"
     >
-      <path id={pathIds ? "orbit" : undefined} d={PATHS.orbit} />
-      <path id={pathIds ? "spark" : undefined} d={PATHS.spark} />
-      <path id={pathIds ? "planet" : undefined} d={PATHS.planet} />
-      <path id={pathIds ? "drop" : undefined} d={PATHS.drop} />
-      <path id={pathIds ? "crescent" : undefined} d={PATHS.crescent} />
-      <path id={pathIds ? "core" : undefined} d={PATHS.core} />
+      <path d={PATHS.orbit} />
+      <path d={PATHS.spark} />
+      <path d={PATHS.planet} />
+      <path d={PATHS.drop} />
+      <path d={PATHS.crescent} />
+      <path d={PATHS.core} />
     </svg>
   );
 }
-
-export { PATHS as LOGO_PATHS };
 ```
 
 - [ ] **Step 2: Verify types and lint**
@@ -122,8 +117,8 @@ Expected: success, no new type errors.
 git add components/ui/LogoMark.tsx
 git commit -m "feat: Add LogoMark inline SVG component
 
-Ports docs/logo3.svg into a React component with currentColor fill,
-optional a11y title, and opt-in path ids for animation targeting."
+Ports docs/logo3.svg into a React component with currentColor fill
+and optional a11y title. All six source paths preserved."
 ```
 
 ---
@@ -222,189 +217,13 @@ Pure DOM, aria-hidden, SSR-safe (no runtime randomness)."
 
 ---
 
-## Task 3: AnimatedBrandMark component
-
-**Files:**
-- Create: `components/ui/AnimatedBrandMark.tsx`
-
-- [ ] **Step 1: Write the component**
-
-```tsx
-// components/ui/AnimatedBrandMark.tsx
-"use client";
-
-import { useEffect, useState } from "react";
-import { motion, type Variants } from "framer-motion";
-import { LogoMark, LOGO_PATHS } from "@/components/ui/LogoMark";
-
-const SESSION_KEY = "asa-mark-played";
-const EASE = [0.22, 1, 0.36, 1] as const;
-
-interface AnimatedBrandMarkProps {
-  size?: number;
-  title?: string;
-  className?: string;
-}
-
-type Phase = "static" | "animate";
-
-function resolvePhase(): Phase {
-  if (typeof window === "undefined") return "static";
-  try {
-    if (sessionStorage.getItem(SESSION_KEY)) return "static";
-  } catch {
-    // Safari private mode etc. — fall through and play
-  }
-  if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
-    return "static";
-  }
-  return "animate";
-}
-
-function markPlayed() {
-  try {
-    sessionStorage.setItem(SESSION_KEY, "1");
-  } catch {
-    // ignore storage failures
-  }
-}
-
-const strokeVariants: Variants = {
-  hidden: { pathLength: 0 },
-  visible: (delay: number) => ({
-    pathLength: 1,
-    transition: { duration: 0.5, delay, ease: EASE },
-  }),
-};
-
-const dotVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.85 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 0.25, delay, ease: EASE },
-  }),
-};
-
-export function AnimatedBrandMark({
-  size = 24,
-  title,
-  className,
-}: AnimatedBrandMarkProps) {
-  const [phase, setPhase] = useState<Phase>("static");
-  const [sparkDone, setSparkDone] = useState(false);
-  const [orbitDone, setOrbitDone] = useState(false);
-
-  useEffect(() => {
-    setPhase(resolvePhase());
-  }, []);
-
-  if (phase === "static") {
-    return <LogoMark size={size} title={title} className={className} />;
-  }
-
-  const labelled = Boolean(title);
-  return (
-    <motion.svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 816 832"
-      width={size}
-      height={size}
-      className={className}
-      role={labelled ? "img" : undefined}
-      aria-label={labelled ? title : undefined}
-      aria-hidden={labelled ? undefined : true}
-      fill="currentColor"
-      onAnimationComplete={markPlayed}
-    >
-      {/* spark: stroke-draw, swap to fill at t≈500ms */}
-      <motion.path
-        d={LOGO_PATHS.spark}
-        custom={0}
-        initial="hidden"
-        animate="visible"
-        variants={strokeVariants}
-        onAnimationComplete={() => setSparkDone(true)}
-        style={{
-          fill: sparkDone ? "currentColor" : "transparent",
-          stroke: sparkDone ? "none" : "currentColor",
-          strokeWidth: sparkDone ? 0 : 2,
-        }}
-      />
-      {/* orbit: stroke-draw, swap to fill at t≈550ms */}
-      <motion.path
-        d={LOGO_PATHS.orbit}
-        custom={0.15}
-        initial="hidden"
-        animate="visible"
-        variants={strokeVariants}
-        onAnimationComplete={() => setOrbitDone(true)}
-        style={{
-          fill: orbitDone ? "currentColor" : "transparent",
-          stroke: orbitDone ? "none" : "currentColor",
-          strokeWidth: orbitDone ? 0 : 2,
-        }}
-      />
-      {/* crescent + drop + planet + core: fade/scale in after strokes land */}
-      <motion.path
-        d={LOGO_PATHS.planet}
-        custom={0.45}
-        initial="hidden"
-        animate="visible"
-        variants={dotVariants}
-      />
-      <motion.path
-        d={LOGO_PATHS.drop}
-        custom={0.45}
-        initial="hidden"
-        animate="visible"
-        variants={dotVariants}
-      />
-      <motion.path
-        d={LOGO_PATHS.crescent}
-        custom={0.45}
-        initial="hidden"
-        animate="visible"
-        variants={dotVariants}
-      />
-      <motion.path
-        d={LOGO_PATHS.core}
-        custom={0.45}
-        initial="hidden"
-        animate="visible"
-        variants={dotVariants}
-      />
-    </motion.svg>
-  );
-}
-```
-
-- [ ] **Step 2: Verify build**
-
-Run: `npm run build`
-Expected: success. No hydration warnings in build log.
-
-- [ ] **Step 3: Commit**
-
-```bash
-git add components/ui/AnimatedBrandMark.tsx
-git commit -m "feat: Add AnimatedBrandMark with one-shot entrance
-
-Stroke-draws the logo on first load of a browser session, then
-renders static for subsequent renders in the same tab. Respects
-prefers-reduced-motion. Per-path fill/stroke swap avoids the
-outline-to-filled flash at global animation end."
-```
-
----
-
-## Task 4: Wire AnimatedBrandMark into Header and Footer
+## Task 3: Wire LogoMark into Header and Footer
 
 **Files:**
 - Modify: `components/layout/Header.tsx`
 - Modify: `components/layout/Footer.tsx`
 
-**Context:** `BrandMark` is consumed by BOTH `Header.tsx:4,30` and `Footer.tsx:4,20`. Both must be migrated in the same commit or Task 8's deletion step will fail. The `AnimatedBrandMark` sessionStorage flag is global — whichever of Header/Footer mounts first plays the animation; the other renders static. On a typical page load the Header mounts first (higher in the tree), so the Footer logo is static from the jump. This is desired.
+**Context:** `BrandMark` is consumed by BOTH `Header.tsx:4,30` and `Footer.tsx:4,20`. Both must be migrated in the same commit or Task 7's deletion will break the build.
 
 - [ ] **Step 1: Update `Header.tsx`**
 
@@ -414,7 +233,7 @@ import { BrandMark } from "@/components/ui/BrandMark";
 ```
 with:
 ```tsx
-import { AnimatedBrandMark } from "@/components/ui/AnimatedBrandMark";
+import { LogoMark } from "@/components/ui/LogoMark";
 ```
 
 Replace the JSX usage:
@@ -423,51 +242,46 @@ Replace the JSX usage:
 ```
 with:
 ```tsx
-<AnimatedBrandMark size={22} className="text-accent" title="ArcSmith" />
+<LogoMark size={22} className="text-accent" title="ArcSmith" />
 ```
 
 - [ ] **Step 2: Update `Footer.tsx`**
 
 Exact same replacement as Header: swap the import and the single JSX usage.
 
-- [ ] **Step 3: Confirm the migration is complete**
+- [ ] **Step 3: Confirm migration is complete**
 
 Run:
 ```bash
 grep -rn "BrandMark" --include="*.ts" --include="*.tsx" components app lib
 ```
-Expected: only the new `AnimatedBrandMark` references in Header, Footer, and the file `components/ui/AnimatedBrandMark.tsx` (which imports `LogoMark`, not `BrandMark`). No reference to `"@/components/ui/BrandMark"` or a bare `<BrandMark` JSX element should remain.
+Expected: only the file `components/ui/BrandMark.tsx` itself still references the name. No other file should contain a `BrandMark` import or JSX usage. If anything else matches, fix it before moving on.
 
 - [ ] **Step 4: Verify build**
 
 Run: `npm run build`
-Expected: success, no type errors. (`components/ui/BrandMark.tsx` is still on disk — its removal is Task 8.)
+Expected: success, no type errors. (`components/ui/BrandMark.tsx` is still on disk — its removal is Task 7.)
 
 - [ ] **Step 5: Manual check**
 
-Run: `npm run dev`, open a fresh incognito window.
+Run: `npm run dev`, open `/` in Chrome.
 
 Verify:
-- [ ] Header logo stroke-draws in ~0.7s on first visit
-- [ ] Footer logo appears **static** at the same moment (no second animation — sessionStorage flag was set by Header's completion)
-- [ ] Cmd-R reload: both logos static from frame 1
-- [ ] Close incognito, reopen → animation plays on Header again, Footer static
-- [ ] DevTools → Rendering → `prefers-reduced-motion: reduce` → reload → both static, no animation anywhere
+- [ ] Header logo renders crisp at 22 px with the accent color
+- [ ] Footer logo renders identically
+- [ ] No visible flicker, no layout shift on navigation
+- [ ] DevTools Network panel: no `/brand/mark.png` request
 
 - [ ] **Step 6: Commit**
 
 ```bash
 git add components/layout/Header.tsx components/layout/Footer.tsx
-git commit -m "feat: Use AnimatedBrandMark in site header and footer
-
-sessionStorage dedup ensures only the first-mounted instance plays
-the entrance animation; the other renders static — so navigation
-within a session is never noisy."
+git commit -m "feat: Replace BrandMark with LogoMark in header and footer"
 ```
 
 ---
 
-## Task 5: Wire StarField into FeaturedHero
+## Task 4: Wire StarField into FeaturedHero
 
 **Files:**
 - Modify: `components/sections/FeaturedHero.tsx`
@@ -520,7 +334,7 @@ git commit -m "feat: Add ambient starfield to home FeaturedHero"
 
 ---
 
-## Task 6: Replace app/icon.svg
+## Task 5: Replace app/icon.svg
 
 **Files:**
 - Modify: `app/icon.svg`
@@ -561,7 +375,7 @@ git commit -m "feat: Replace app/icon.svg with new ArcSmith logo"
 
 ---
 
-## Task 7: Regenerate app/favicon.ico
+## Task 6: Regenerate app/favicon.ico
 
 **Files:**
 - Create: `scripts/generate-favicon.sh`
@@ -574,7 +388,7 @@ Run each command in turn and note which succeeds:
 which rsvg-convert
 which magick
 which convert
-which npx   # npx sharp-cli or npx svgexport fallback
+which npx
 ```
 
 The script below prefers `rsvg-convert` → `magick` → `convert`, else falls back to `npx svgexport`. If none are available, install one (macOS: `brew install librsvg` recommended).
@@ -639,7 +453,7 @@ chmod +x scripts/generate-favicon.sh
 ```bash
 ./scripts/generate-favicon.sh
 ```
-Expected: `Wrote app/favicon.ico` and no errors. If the script fails, fall back to manually rasterizing via Figma/online converter and placing the resulting `.ico` at `app/favicon.ico`.
+Expected: `Wrote app/favicon.ico` and no errors. If the script fails, fall back to manually rasterizing via Figma / online converter and placing the resulting `.ico` at `app/favicon.ico`.
 
 - [ ] **Step 4: Verify build**
 
@@ -664,7 +478,7 @@ favicon carries 16/32/48 px raster tiers of the ArcSmith mark."
 
 ---
 
-## Task 8: Delete BrandMark and its PNG asset
+## Task 7: Delete BrandMark and its PNG asset
 
 **Files:**
 - Delete: `components/ui/BrandMark.tsx`
@@ -678,15 +492,13 @@ grep -rn "BrandMark" --include="*.ts" --include="*.tsx" components app lib
 grep -rn "brand/mark" --include="*.ts" --include="*.tsx" components app lib
 grep -rn "@/components/ui/BrandMark" --include="*.ts" --include="*.tsx" components app lib
 ```
-Expected: matches reference ONLY the new `AnimatedBrandMark` / `LogoMark` names, plus `components/ui/BrandMark.tsx` itself (which is about to be deleted). If a bare `<BrandMark` JSX usage or a `"@/components/ui/BrandMark"` import remains outside `BrandMark.tsx`, **stop** and migrate it in Task 4 before returning here.
+Expected: only `components/ui/BrandMark.tsx` itself matches (the file about to be deleted). No import, no `<BrandMark` JSX, no `brand/mark` path reference should exist elsewhere.
 
 - [ ] **Step 2: Delete**
 
 ```bash
 git rm components/ui/BrandMark.tsx
 git rm public/brand/mark.png
-# If the brand/ directory is now empty, leave it — next run of git prune/git clean
-# will handle it. Do NOT manually rmdir shared directories.
 ```
 
 - [ ] **Step 3: Verify build**
@@ -699,13 +511,13 @@ Expected: success, no "module not found" errors.
 ```bash
 git commit -m "chore: Remove unused BrandMark component and PNG asset
 
-AnimatedBrandMark (inline SVG) replaces both the old BrandMark
-wrapper and the underlying mark.png raster."
+LogoMark (inline SVG) replaces both the old BrandMark wrapper
+and the underlying mark.png raster."
 ```
 
 ---
 
-## Task 9: Final verification
+## Task 8: Final verification
 
 **No files changed** — this task is an end-to-end walk-through against the spec's acceptance criteria.
 
@@ -730,8 +542,7 @@ Run: `npm run dev`.
 
 Go through each acceptance criterion from `docs/superpowers/specs/2026-04-20-space-theme-design.md` §10:
 - [ ] Home hero shows stars, app pages and `/about` do not
-- [ ] First-session animation plays (~700ms), reload is static, new tab plays again
-- [ ] `prefers-reduced-motion: reduce` → no animation
+- [ ] Header and footer logos render correctly with no animation and no layout shift
 - [ ] Favicon at 16/32 in Chrome, Safari, Firefox
 - [ ] Lighthouse Performance ≥ baseline; CLS = 0 on home page
 - [ ] `npm run build` emits no hydration warnings (already checked in Step 1)
@@ -750,11 +561,10 @@ This task produces no code. If all checks pass, the feature branch is ready for 
 
 1. `feat: Add LogoMark inline SVG component`
 2. `feat: Add decorative StarField component`
-3. `feat: Add AnimatedBrandMark with one-shot entrance`
-4. `feat: Use AnimatedBrandMark in site header and footer`
-5. `feat: Add ambient starfield to home FeaturedHero`
-6. `feat: Replace app/icon.svg with new ArcSmith logo`
-7. `feat: Regenerate favicon.ico from new logo`
-8. `chore: Remove unused BrandMark component and PNG asset`
+3. `feat: Replace BrandMark with LogoMark in header and footer`
+4. `feat: Add ambient starfield to home FeaturedHero`
+5. `feat: Replace app/icon.svg with new ArcSmith logo`
+6. `feat: Regenerate favicon.ico from new logo`
+7. `chore: Remove unused BrandMark component and PNG asset`
 
-Eight commits, four TypeScript components touched, no new dependencies, manual verification per spec §9.2.
+Seven commits, two TypeScript components touched, no new dependencies, manual verification per spec §9.2.
