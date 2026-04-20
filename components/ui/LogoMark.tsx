@@ -47,11 +47,29 @@ export function LogoMark({
       <path d={PATHS.orbit} />
       {/* Rocket trail — same white as rocket body */}
       <path d={PATHS.spark} fill="#e8f0ec" />
-      {/* Rocket — forced white regardless of surrounding fill */}
-      <path d={PATHS.planet} fill="#e8f0ec" />
       <path d={PATHS.drop} />
       <path d={PATHS.crescent} />
       <path d={PATHS.core} />
+      {/* Two parallel exhaust streaks drawn as stroked arcs, overlaid
+          on top of the orbit so they read as clean trail lines without
+          colliding with the orbit fill. Render BEFORE the rocket so the
+          body sits above its own exhaust. */}
+      <path
+        d="M 455 290 Q 380 400 305 495"
+        fill="none"
+        stroke="#e8f0ec"
+        strokeWidth={22}
+        strokeLinecap="round"
+      />
+      <path
+        d="M 500 340 Q 425 445 355 540"
+        fill="none"
+        stroke="#e8f0ec"
+        strokeWidth={18}
+        strokeLinecap="round"
+      />
+      {/* Rocket — forced white regardless of surrounding fill */}
+      <path d={PATHS.planet} fill="#e8f0ec" />
     </svg>
   );
 }
