@@ -51,13 +51,13 @@ export function StarField({ count = 18, className }: StarFieldProps) {
             position: "absolute",
             top: `${star.top}%`,
             left: `${star.left}%`,
-            width: "1.5px",
-            height: "1.5px",
+            width: "2.5px",
+            height: "2.5px",
             borderRadius: "50%",
             background: "#e8f0ec",
             opacity: star.opacity,
             transform: `scale(${star.scale})`,
-            boxShadow: "0 0 2px rgba(232, 240, 236, 0.4)",
+            boxShadow: "0 0 4px rgba(232, 240, 236, 0.7)",
           }}
         />
       ))}
