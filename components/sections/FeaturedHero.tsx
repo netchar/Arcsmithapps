@@ -8,17 +8,19 @@ import { StarField } from "@/components/ui/StarField";
 import { Constellation } from "@/components/ui/Constellation";
 import { DistantPlanet } from "@/components/ui/DistantPlanet";
 
-// Ursa Major — 7 stars, handle runs left→right, bowl on the right.
+// Ursa Major — handle curves from upper-left down to the bowl;
+// bowl is a tilted quadrilateral in the lower-right. Dubhe and Merak
+// are the bright "pointer stars" on the right edge of the bowl.
 const URSA_MAJOR = {
-  viewBox: "0 0 120 50",
+  viewBox: "0 0 140 80",
   stars: [
-    { cx: 5,   cy: 30 },              // Alkaid (handle tip)
-    { cx: 25,  cy: 26 },              // Mizar
-    { cx: 45,  cy: 22 },              // Alioth
-    { cx: 65,  cy: 20 },              // Megrez (bowl corner, handle end)
-    { cx: 85,  cy: 5,  peak: 0.95 },  // Dubhe (brightest in bowl)
-    { cx: 115, cy: 15 },              // Merak
-    { cx: 90,  cy: 32 },              // Phecda
+    { cx: 8,   cy: 18 },                       // Alkaid (handle tip)
+    { cx: 30,  cy: 25 },                       // Mizar
+    { cx: 52,  cy: 32 },                       // Alioth
+    { cx: 72,  cy: 38 },                       // Megrez (handle-bowl junction)
+    { cx: 110, cy: 30, peak: 1.00, r: 1.2 },   // Dubhe (pointer, bright)
+    { cx: 120, cy: 55, peak: 0.95, r: 1.1 },   // Merak (pointer, bright)
+    { cx: 78,  cy: 60 },                       // Phecda
   ],
   lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,3]] as const,
 };
@@ -61,7 +63,7 @@ export function FeaturedHero({ app, lang, dict }: FeaturedHeroProps) {
         lines={URSA_MAJOR.lines}
         label="Ursa Major"
         className="pointer-events-none absolute"
-        style={{ top: "8%", right: "4%", width: "clamp(140px, 18vw, 240px)", aspectRatio: "120 / 50" }}
+        style={{ top: "8%", right: "4%", width: "clamp(160px, 20vw, 260px)", aspectRatio: "140 / 80" }}
       />
       <Constellation
         viewBox={VIRGO.viewBox}
