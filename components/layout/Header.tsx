@@ -27,7 +27,7 @@ export function Header({ lang, dict }: HeaderProps) {
             href={localePath(lang, "/")}
             className="flex items-center gap-2 text-lg font-bold text-text-primary"
           >
-            <LogoMark size={40} className="text-text-primary" title="ArcSmith" />
+            <LogoMark size={40} className="text-accent" title="ArcSmith" />
             <span>
               ArcSmith<span className="text-accent">.</span>
             </span>

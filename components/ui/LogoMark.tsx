@@ -49,7 +49,8 @@ export function LogoMark({
       <path d={PATHS.planet} />
       <path d={PATHS.drop} />
       <path d={PATHS.crescent} />
-      <path d={PATHS.core} />
+      {/* Rocket core — forced white regardless of surrounding fill */}
+      <path d={PATHS.core} fill="#e8f0ec" />
     </svg>
   );
 }
