@@ -45,7 +45,8 @@ export function LogoMark({
       fill="currentColor"
     >
       <path d={PATHS.orbit} />
-      <path d={PATHS.spark} />
+      {/* Rocket trail — same white as rocket body */}
+      <path d={PATHS.spark} fill="#e8f0ec" />
       {/* Rocket — forced white regardless of surrounding fill */}
       <path d={PATHS.planet} fill="#e8f0ec" />
       <path d={PATHS.drop} />
