@@ -43,6 +43,7 @@ Per `docs/logo-brief.md`:
 |------|--------|
 | `components/sections/FeaturedHero.tsx` | Render `<StarField />` between the two existing radial-glow layers |
 | `components/layout/Header.tsx` | Swap `BrandMark` → `AnimatedBrandMark` |
+| `components/layout/Footer.tsx` | Swap `BrandMark` → `AnimatedBrandMark` (sessionStorage dedup means whichever mounts first plays; the other renders static — desired) |
 | `app/icon.svg` | Replace with optimized `logo3.svg` (fill `#e8f0ec`) |
 | `app/favicon.ico` | Regenerate from `logo3.svg` (16/32/48 px) |
 
@@ -126,7 +127,7 @@ interface LogoMarkProps {
 
 **Source**
 
-- `docs/logo3.svg` is optimized with SVGO (remove `xml:space`, `enable-background`, `xmlns:xlink`, `id="Layer_1"`, collapse whitespace), then ported into `LogoMark.tsx` as JSX. The four paths are assigned stable ids by geometry: `spark` (large diagonal arc), `orbit` (right-side curve), `crescent` (upper crescent), `drop` (lower drop).
+- `docs/logo3.svg` is optimized with SVGO (remove `xml:space`, `enable-background`, `xmlns:xlink`, `id="Layer_1"`, collapse whitespace), then ported into `LogoMark.tsx` as JSX. The **six** paths are assigned stable ids by geometry: `spark` (large diagonal arc, line 58 of source), `orbit` (right-side curve with two internal dot holes, line 3), `planet` (upper-right saturn-with-ring, line 86), `crescent` (upper-left crescent, line 134), `drop` (lower-left drop, line 114), `core` (central vertical bar with dot, line 156).
 
 ### 5.3 `AnimatedBrandMark`
 
@@ -154,9 +155,9 @@ interface AnimatedBrandMarkProps {
 |-----------|--------|----------|-----------|
 | 0–500 | `#spark` | `pathLength` | 0 → 1 |
 | 150–550 | `#orbit` | `pathLength` | 0 → 1 |
-| 450–700 | `#crescent`, `#drop` | `opacity`, `scale` | `0, 0.85` → `1, 1` |
+| 450–700 | `#crescent`, `#drop`, `#planet`, `#core` | `opacity`, `scale` | `0, 0.85` → `1, 1` |
 
-During stroke-draw, `#spark` and `#orbit` are rendered as `fill: transparent; stroke: currentColor; stroke-width: 2`. The fill/stroke swap (`fill: currentColor; stroke: none`) is applied **per path** the moment that path's `pathLength` reaches 1 — so `#spark` swaps at t≈500ms, `#orbit` at t≈550ms. This avoids a visible "outline → filled" flash at the global end. All four paths end at `opacity: 1`.
+During stroke-draw, `#spark` and `#orbit` are rendered as `fill: transparent; stroke: currentColor; stroke-width: 2`. The fill/stroke swap (`fill: currentColor; stroke: none`) is applied **per path** the moment that path's `pathLength` reaches 1 — so `#spark` swaps at t≈500ms, `#orbit` at t≈550ms. This avoids a visible "outline → filled" flash at the global end. All six paths end at `opacity: 1`.
 
 **sessionStorage semantics**
 
