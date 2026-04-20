@@ -17,7 +17,7 @@ export function Footer({ lang, dict }: FooterProps) {
             href={localePath(lang, "/")}
             className="flex items-center gap-2 text-lg font-bold text-text-primary"
           >
-            <LogoMark size={32} className="text-accent" title="ArcSmith" />
+            <LogoMark size={40} className="text-accent" title="ArcSmith" />
             <span>
               ArcSmith<span className="text-accent">.</span>
             </span>
