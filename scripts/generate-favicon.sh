@@ -4,6 +4,10 @@
 # convert (ImageMagick 6), or npx svgexport.
 # Also requires: png2ico OR ImageMagick to bundle the .ico.
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
+
 set -euo pipefail
 
 SRC="app/icon.svg"
@@ -20,8 +24,11 @@ rasterize() {
     magick -background none -density 384 "$SRC" -resize "${size}x${size}" "$dest"
   elif command -v convert >/dev/null 2>&1; then
     convert -background none -density 384 "$SRC" -resize "${size}x${size}" "$dest"
-  else
+  elif command -v npx >/dev/null 2>&1; then
     npx --yes svgexport "$SRC" "$dest" "${size}:${size}"
+  else
+    echo "Need rsvg-convert, ImageMagick, or npx svgexport to rasterize SVG" >&2
+    exit 1
   fi
 }
 
