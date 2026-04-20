@@ -207,46 +207,41 @@ The script documents reproducibility. It is not invoked during Next.js build.
 - CLS target: 0 (entrance animation runs on elements whose layout box is reserved at SSR).
 - Lighthouse Performance: must not regress vs. baseline.
 
-## 9. Testing
+## 9. Verification
 
-### 9.1 Unit (Vitest + React Testing Library)
+The repository currently has no automated test infrastructure (no Vitest, no Playwright, no `tests/` directory, no test scripts in `package.json`). Rather than bootstrap a full stack for three components, verification for this change is **manual + build-gated**. Automated coverage can be introduced in a later spec when the project adopts a testing stack.
 
-`StarField.test.tsx`
-- Default `count={18}` renders 18 `<span>` elements.
-- Explicit `count={5}` renders 5.
-- `count > STARS.length` is clamped.
-- Root `<div>` carries `aria-hidden="true"` and has `pointer-events-none`.
-- Snapshot of rendered markup is stable.
+### 9.1 Build verification (automated, CI-ready)
 
-`LogoMark.test.tsx`
-- Renders inline `<svg>` with `viewBox="0 0 816 832"` and 4 `<path>` children.
-- When `title="ArcSmith"` — has `role="img"` and `aria-label="ArcSmith"`, no `aria-hidden`.
-- When no `title` — has `aria-hidden="true"`, no `role` / `aria-label`.
-- `pathIds={true}` assigns the 4 stable ids.
+- `npm run build` completes with **zero** hydration warnings, type errors, or new eslint errors.
+- `npm run lint` passes.
 
-`AnimatedBrandMark.test.tsx`
-- With `sessionStorage['asa-mark-played']='1'` set before mount → renders static (no `motion` elements).
-- With mocked `matchMedia('(prefers-reduced-motion: reduce)')` returning `matches: true` → renders static.
-- Fresh session + no reduced motion → swaps to motion component after effect; on animation complete, sessionStorage flag is set.
-- SSR render (no `window`) does not throw and outputs static markup.
+### 9.2 Manual verification (dev server)
 
-`FeaturedHero.test.tsx` (update)
-- `StarField` is rendered inside the section.
-- Layer order `gradient → glow1 → StarField → glow2 → content` preserved.
+Run `npm run dev` and in a fresh Chrome profile:
 
-### 9.2 E2E (Playwright, 1 scenario)
+**Home page — ambient layer**
+- [ ] Hero block on `/` shows faint star pinpoints, visible but not drawing attention.
+- [ ] App detail pages (`/<app-slug>`) and `/about` have **no** stars.
 
-File: `tests/e2e/space-theme.spec.ts`
+**Logo entrance animation**
+- [ ] First visit in a fresh tab: header logo stroke-draws in ~700ms, points fade in, settles to static.
+- [ ] Reload tab (Cmd-R): logo is static from frame 1, no animation.
+- [ ] Close tab, open new tab, navigate to `/`: animation plays again.
+- [ ] DevTools → Rendering → "Emulate CSS media feature prefers-reduced-motion: reduce" → reload: animation does **not** play.
 
-1. Load home page in a fresh browser context.
-2. Within 1s, assert the four logo paths are in their final state: `opacity=1` on all four, and `#spark`/`#orbit` have computed `fill` = rendered text color (post-swap), not `transparent`. (Asserting on `stroke-dashoffset` is **not** reliable because §5.3 swaps each path to `stroke: none` on completion.)
-3. Reload the page; assert the logo paths are in their final state immediately (no animation replay).
-4. Open a new browser context; animation plays again.
+**Assets**
+- [ ] Browser tab favicon renders at 16 and 32 px in Chrome, Safari, Firefox.
+- [ ] `<link rel="icon" type="image/svg+xml">` picked up (check DevTools Network panel for `icon.svg` request).
 
-### 9.3 Build verification
+**Cross-browser smoke**
+- [ ] Chrome, Safari, Firefox — all of the above.
 
-- `next build` completes with no hydration warnings or type errors.
-- `next lint` passes.
+### 9.3 Performance spot-check
+
+- Run Lighthouse on `/` before and after the change (same Chrome profile, same network throttling).
+- [ ] Performance score does not regress.
+- [ ] CLS = 0 (no layout shift from logo animation).
 
 ## 10. Acceptance Criteria
 
@@ -257,8 +252,8 @@ File: `tests/e2e/space-theme.spec.ts`
 - [ ] With OS-level `prefers-reduced-motion: reduce`, the animation never plays.
 - [ ] Favicon renders at 16/32 px in Chrome, Safari, Firefox.
 - [ ] Lighthouse Performance ≥ baseline; CLS = 0.
-- [ ] All unit tests green; E2E scenario green.
-- [ ] `next build` emits no hydration warnings.
+- [ ] Manual verification checklist (§9.2) fully green.
+- [ ] `npm run build` emits no hydration warnings.
 
 ## 11. Follow-ups (out of scope)
 
