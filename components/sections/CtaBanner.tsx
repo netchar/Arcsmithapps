@@ -8,7 +8,7 @@ interface CtaBannerProps {
   app: AppData;
   dict: {
     cta: {
-      downloadOnGooglePlay: string;
+      getOnGooglePlay: string;
       comingSoon: string;
       comingSoonSub: string;
     };
@@ -43,7 +43,7 @@ export function CtaBanner({ app, dict }: CtaBannerProps) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#1e4d3a] to-[#163d2e] px-8 py-4 text-base font-semibold text-[#d0e8dc] transition-all hover:shadow-[0_4px_20px_rgba(30,77,58,0.4)] cursor-pointer"
               >
-                {dict.cta.downloadOnGooglePlay}
+                {dict.cta.getOnGooglePlay}
                 <ExternalLink size={16} />
               </a>
             ) : (
