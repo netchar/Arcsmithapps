@@ -1,0 +1,20 @@
+@keyframes twinkle {
+  from {
+    opacity: var(--twinkle-low);
+  }
+  to {
+    opacity: var(--twinkle-high);
+  }
+}
+
+.star {
+  animation: twinkle var(--twinkle-duration, 4s) ease-in-out var(--twinkle-delay, 0s) infinite alternate;
+  will-change: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .star {
+    animation: none;
+    opacity: var(--twinkle-high);
+  }
+}

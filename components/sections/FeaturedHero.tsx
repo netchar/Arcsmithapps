@@ -4,6 +4,40 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { PhoneMockup } from "@/components/ui/PhoneMockup";
+import { StarField } from "@/components/ui/StarField";
+import { Constellation } from "@/components/ui/Constellation";
+import { DistantPlanet } from "@/components/ui/DistantPlanet";
+
+// Ursa Major — handle curves from upper-left down to the bowl;
+// bowl is a tilted quadrilateral in the lower-right. Dubhe and Merak
+// are the bright "pointer stars" on the right edge of the bowl.
+const URSA_MAJOR = {
+  viewBox: "0 0 140 80",
+  stars: [
+    { cx: 8,   cy: 18 },                       // Alkaid (handle tip)
+    { cx: 30,  cy: 25 },                       // Mizar
+    { cx: 52,  cy: 32 },                       // Alioth
+    { cx: 72,  cy: 38 },                       // Megrez (handle-bowl junction)
+    { cx: 110, cy: 30, peak: 1.00, r: 1.2 },   // Dubhe (pointer, bright)
+    { cx: 120, cy: 55, peak: 0.95, r: 1.1 },   // Merak (pointer, bright)
+    { cx: 78,  cy: 60 },                       // Phecda
+  ],
+  lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,3]] as const,
+};
+
+// Virgo — simplified bright stars around the "Y" backbone.
+const VIRGO = {
+  viewBox: "0 0 80 70",
+  stars: [
+    { cx: 5,  cy: 5  },              // Vindemiatrix
+    { cx: 30, cy: 15 },              // Auva
+    { cx: 45, cy: 25 },              // Porrima (junction)
+    { cx: 75, cy: 22 },              // Zavijava
+    { cx: 60, cy: 42 },              // Zaniah
+    { cx: 55, cy: 62, peak: 1.0, r: 1.3 }, // Spica (brightest)
+  ],
+  lines: [[0,1],[1,2],[2,3],[2,4],[4,5]] as const,
+};
 import { localePath } from "@/lib/locale-path";
 import type { AppData } from "@/lib/apps";
 
@@ -22,6 +56,29 @@ export function FeaturedHero({ app, lang, dict }: FeaturedHeroProps) {
       {/* Background gradient + glow */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#141e1a] via-bg-primary to-[#111a16]" />
       <div className="pointer-events-none absolute top-[-200px] left-[-100px] w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(30,77,58,0.12)_0%,transparent_70%)]" />
+      <StarField />
+      <Constellation
+        viewBox={URSA_MAJOR.viewBox}
+        stars={URSA_MAJOR.stars}
+        lines={URSA_MAJOR.lines}
+        label="Ursa Major"
+        className="pointer-events-none absolute"
+        style={{ top: "8%", right: "4%", width: "clamp(160px, 20vw, 260px)", aspectRatio: "140 / 80" }}
+      />
+      <Constellation
+        viewBox={VIRGO.viewBox}
+        stars={VIRGO.stars}
+        lines={VIRGO.lines}
+        label="Virgo"
+        className="pointer-events-none absolute"
+        style={{ left: "3%", bottom: "10%", width: "clamp(90px, 11vw, 150px)", aspectRatio: "80 / 70" }}
+      />
+      <DistantPlanet
+        size={8}
+        glow={30}
+        color="#d9c9a8"
+        style={{ top: "24%", left: "6%" }}
+      />
       <div className="pointer-events-none absolute bottom-[-150px] right-[-100px] w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle,rgba(30,77,58,0.08)_0%,transparent_70%)]" />
 
       <div className="relative mx-auto max-w-[1200px] px-6 py-24 sm:py-32">

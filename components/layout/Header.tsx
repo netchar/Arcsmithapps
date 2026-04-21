@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Locale, Dictionary } from "@/lib/i18n";
 import { locales, defaultLocale } from "@/lib/i18n";
-import { BrandMark } from "@/components/ui/BrandMark";
+import { LogoMark } from "@/components/ui/LogoMark";
 
 interface HeaderProps {
   lang: Locale;
@@ -27,7 +27,7 @@ export function Header({ lang, dict }: HeaderProps) {
             href={localePath(lang, "/")}
             className="flex items-center gap-2 text-lg font-bold text-text-primary"
           >
-            <BrandMark size={22} className="text-accent" title="ArcSmith" />
+            <LogoMark size={36} className="text-accent" title="ArcSmith" />
             <span>
               ArcSmith<span className="text-accent">.</span>
             </span>
