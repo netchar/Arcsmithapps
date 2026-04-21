@@ -30,6 +30,12 @@ const PATHS: ReadonlyArray<{ d: string; fill: string }> = [
   { fill: "#6fb895", d: "M 863.5,1249.5 C 965.833,1250.83 1068.17,1250.83 1170.5,1249.5C 1171.04,1249.56 1171.38,1249.89 1171.5,1250.5C 1068.5,1251.5 965.502,1251.83 862.5,1251.5C 862.328,1250.51 862.662,1249.84 863.5,1249.5 Z" },
 ];
 
+// 4-way solid drop-shadow stack — creates a crisp light outline around
+// the whole silhouette without modifying any SVG paths. Values tuned for
+// the 36px display size; scales reasonably at 24–64px.
+const OUTLINE_FILTER =
+  "drop-shadow(1px 0 0 #e8f0ec) drop-shadow(-1px 0 0 #e8f0ec) drop-shadow(0 1px 0 #e8f0ec) drop-shadow(0 -1px 0 #e8f0ec)";
+
 export function LogoMark({
   size = 24,
   title,
@@ -43,7 +49,7 @@ export function LogoMark({
       viewBox={VIEWBOX}
       width={size}
       className={className}
-      style={style}
+      style={{ filter: OUTLINE_FILTER, ...style }}
       role={labelled ? "img" : undefined}
       aria-label={labelled ? title : undefined}
       aria-hidden={labelled ? undefined : true}
