@@ -8,7 +8,9 @@ const defaultLocale = "en";
 function localeUrl(baseUrl: string, locale: string, path: string): string {
   return locale === defaultLocale
     ? `${baseUrl}${path}`
-    : `${baseUrl}/${locale}${path}`;
+    : path === "/"
+      ? `${baseUrl}/${locale}`
+      : `${baseUrl}/${locale}${path}`;
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {

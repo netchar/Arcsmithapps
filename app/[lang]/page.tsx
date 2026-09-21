@@ -1,8 +1,25 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllApps } from "@/lib/apps";
 import { FeaturedHero } from "@/components/sections/FeaturedHero";
 import { AppGrid } from "@/components/sections/AppGrid";
 import { getDictionary, hasLocale, type Locale } from "@/lib/i18n";
+import { pageAlternates } from "@/lib/seo";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) return {};
+
+  const dict = await getDictionary(lang);
+  return {
+    description: dict.hero.tagline,
+    alternates: pageAlternates(lang, "/"),
+  };
+}
 
 export default async function HomePage({
   params,

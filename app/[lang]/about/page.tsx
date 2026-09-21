@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale, type Locale } from "@/lib/i18n";
+import { pageAlternates } from "@/lib/seo";
 import { AboutContent } from "./about-content";
 
 export async function generateMetadata({
@@ -15,6 +16,7 @@ export async function generateMetadata({
   return {
     title: dict.about.title,
     description: dict.about.paragraphs[0],
+    alternates: pageAlternates(lang, "/about"),
   };
 }
 

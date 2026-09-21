@@ -5,6 +5,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { getLegalDoc, getAllLegalPaths } from "@/lib/mdx";
 import { notFound } from "next/navigation";
 import { getDictionary, hasLocale, locales, type Locale } from "@/lib/i18n";
+import { pageAlternates } from "@/lib/seo";
 
 interface PageProps {
   params: Promise<{ lang: string; app: string; doc: string }>;
@@ -22,13 +23,16 @@ export const dynamicParams = false;
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { app, doc } = await params;
-  const legalDoc = getLegalDoc(app, doc, "en");
+  const { lang, app, doc } = await params;
+  if (!hasLocale(lang)) return {};
+
+  const legalDoc = getLegalDoc(app, doc, lang);
   if (!legalDoc) return { title: "Not Found" };
 
   return {
     title: `${legalDoc.frontmatter.title} — ${legalDoc.frontmatter.appName}`,
     description: `${legalDoc.frontmatter.title} for ${legalDoc.frontmatter.appName}`,
+    alternates: pageAlternates(lang, `/${app}/${doc}`),
   };
 }
 

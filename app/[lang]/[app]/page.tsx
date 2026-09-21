@@ -8,6 +8,7 @@ import { FeatureGrid } from "@/components/sections/FeatureGrid";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { AppLegal } from "@/components/sections/AppLegal";
 import { getDictionary, hasLocale, locales, type Locale } from "@/lib/i18n";
+import { pageAlternates } from "@/lib/seo";
 
 interface PageProps {
   params: Promise<{ lang: string; app: string }>;
@@ -23,13 +24,16 @@ export const dynamicParams = false;
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { app: slug } = await params;
-  const app = getApp(slug, "en");
+  const { lang, app: slug } = await params;
+  if (!hasLocale(lang)) return {};
+
+  const app = getApp(slug, lang);
   if (!app) return { title: "Not Found" };
 
   return {
     title: app.name,
     description: `${app.tagline} — ${app.description}`,
+    alternates: pageAlternates(lang, `/${slug}`),
   };
 }
 

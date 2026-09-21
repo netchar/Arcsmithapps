@@ -26,11 +26,6 @@ export async function generateMetadata({
       template: "%s — ArcSmith Apps",
     },
     description: dict.hero.tagline,
-    alternates: {
-      languages: Object.fromEntries(
-        locales.map((l) => [l, l === "en" ? "/" : `/${l}`])
-      ),
-    },
   };
 }
 
