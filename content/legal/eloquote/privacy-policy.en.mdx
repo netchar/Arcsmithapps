@@ -59,13 +59,20 @@ Identifiers used by these services:
 
 We do not attach your name, email address, quote text, search terms, your background photo, or any account identifier to these events. Both services are disabled in debug builds used during development.
 
+You can turn off both services in the app: **Settings → Share usage analytics**. When you turn it off, Eloquote stops collecting analytics events and crash reports and deletes the crash reports that were not sent yet. The switch is on until you turn it off.
+
 ## Advertising Measurement
 
-We advertise Eloquote through Google Ads. Our Firebase Analytics data is linked to our Google Ads account. Google uses this data to report which of our ad campaigns led to installs and in-app actions, and it may use the data to decide who sees our ads. On Android, this data includes the Advertising ID.
+We advertise Eloquote through Google Ads. Our Firebase Analytics data is linked to our Google Ads account. Google Ads receives app events, such as installs and in-app purchases, only to measure which of our own ad campaigns led to them. Ad personalization is turned off on Android and iOS: Google does not use this data to choose who sees ads.
 
-Eloquote itself shows no ads and integrates no advertising SDKs.
+- **Android:** this data includes the Advertising ID, which Google uses for install attribution.
+- **iOS:** the app uses Google's on-device conversion measurement and Apple's SKAdNetwork. The app does not read the advertising identifier (IDFA) and does not track you across apps and websites of other companies.
 
-To stop the use of your Advertising ID on Android, open your device settings, find the ads settings (Settings → Google → Ads, or Settings → Privacy → Ads), and choose "Delete advertising ID". You can also reset it there.
+For users in the European Economic Area, Google applies its EU user consent policy to the use of this data for advertising.
+
+Eloquote itself shows no ads.
+
+To stop all of this measurement, turn off **Settings → Share usage analytics**. To stop the use of your Advertising ID on Android, open your device settings, find the ads settings (Settings → Google → Ads, or Settings → Privacy → Ads), and choose "Delete advertising ID". You can also reset it there.
 
 ## App Rating
 
@@ -130,6 +137,7 @@ You have control over your data in Eloquote:
 - Clear all app data (Android) or uninstall the app to remove all locally stored information
 - Manage or cancel your subscription in Google Play (Android) or in your Apple Account settings (iOS)
 - Delete or reset your Advertising ID in your Android settings
+- Turn off analytics and crash reporting in **Settings → Share usage analytics**
 - Turn off device backup for Eloquote in your Android or iCloud settings
 
 If you are in a jurisdiction that grants additional privacy rights (such as access, portability, objection, or erasure requests related to data held by our service providers), contact us at support.eloquote@arcsmithapps.com. You also have the right to lodge a complaint with your local data protection authority. In Poland, this is the President of the Personal Data Protection Office (UODO).

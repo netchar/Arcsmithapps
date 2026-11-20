@@ -59,13 +59,20 @@ Identyfikatory używane przez te usługi:
 
 Do tych zdarzeń nie dołączamy Twojego imienia, adresu e-mail, treści cytatów, zapytań wyszukiwania, Twojego zdjęcia tła ani żadnego identyfikatora konta. Obie usługi są wyłączone w kompilacjach debugowych używanych podczas rozwoju.
 
+Obie usługi możesz wyłączyć w aplikacji: **Ustawienia → Udostępniaj statystyki użycia**. Po wyłączeniu Eloquote przestaje zbierać zdarzenia analityczne i raporty awarii oraz usuwa raporty awarii, które nie zostały jeszcze wysłane. Przełącznik jest włączony, dopóki go nie wyłączysz.
+
 ## Pomiar reklam
 
-Reklamujemy Eloquote za pośrednictwem Google Ads. Nasze dane Firebase Analytics są połączone z naszym kontem Google Ads. Google używa tych danych, aby raportować, które z naszych kampanii reklamowych doprowadziły do instalacji i działań w aplikacji, i może ich używać do określania, komu wyświetlać nasze reklamy. Na Android dane te obejmują identyfikator wyświetlania reklam.
+Reklamujemy Eloquote za pośrednictwem Google Ads. Nasze dane Firebase Analytics są połączone z naszym kontem Google Ads. Google Ads otrzymuje zdarzenia z aplikacji, takie jak instalacje i zakupy w aplikacji, wyłącznie po to, aby mierzyć, które z naszych własnych kampanii reklamowych do nich doprowadziły. Personalizacja reklam jest wyłączona na Android i iOS: Google nie używa tych danych do wybierania, komu wyświetlać reklamy.
 
-Sama aplikacja Eloquote nie wyświetla reklam i nie integruje żadnych SDK reklamowych.
+- **Android:** dane te obejmują identyfikator wyświetlania reklam, którego Google używa do przypisywania instalacji.
+- **iOS:** aplikacja korzysta z pomiaru konwersji na urządzeniu (Google) i z SKAdNetwork (Apple). Aplikacja nie odczytuje identyfikatora reklamowego (IDFA) i nie śledzi Cię w aplikacjach i witrynach innych firm.
 
-Aby zakończyć używanie Twojego identyfikatora wyświetlania reklam na Android, otwórz ustawienia urządzenia, znajdź ustawienia reklam (Ustawienia → Google → Reklamy lub Ustawienia → Prywatność → Reklamy) i wybierz „Usuń identyfikator wyświetlania reklam". Możesz go tam również zresetować.
+W przypadku użytkowników z Europejskiego Obszaru Gospodarczego Google stosuje do używania tych danych w reklamach swoją politykę dotyczącą zgody użytkowników z UE.
+
+Sama aplikacja Eloquote nie wyświetla reklam.
+
+Aby zatrzymać cały ten pomiar, wyłącz **Ustawienia → Udostępniaj statystyki użycia**. Aby zakończyć używanie Twojego identyfikatora wyświetlania reklam na Android, otwórz ustawienia urządzenia, znajdź ustawienia reklam (Ustawienia → Google → Reklamy lub Ustawienia → Prywatność → Reklamy) i wybierz „Usuń identyfikator wyświetlania reklam". Możesz go tam również zresetować.
 
 ## Ocena aplikacji
 
@@ -130,6 +137,7 @@ Masz kontrolę nad swoimi danymi w Eloquote:
 - Wyczyść wszystkie dane aplikacji (Android) lub odinstaluj aplikację, aby usunąć wszystkie lokalnie przechowywane informacje
 - Zarządzaj subskrypcją lub anuluj ją w Google Play (Android) lub w ustawieniach konta Apple (iOS)
 - Usuń lub zresetuj identyfikator wyświetlania reklam w ustawieniach Android
+- Wyłącz analitykę i raportowanie awarii w **Ustawienia → Udostępniaj statystyki użycia**
 - Wyłącz kopię zapasową dla Eloquote w ustawieniach Android lub iCloud
 
 Jeśli znajdujesz się w jurysdykcji przyznającej dodatkowe prawa do prywatności (takie jak prawo dostępu, przenoszenia danych, sprzeciwu lub żądania usunięcia danych przechowywanych przez naszych dostawców usług), skontaktuj się z nami pod adresem support.eloquote@arcsmithapps.com. Masz także prawo wnieść skargę do lokalnego organu ochrony danych. W Polsce jest to Prezes Urzędu Ochrony Danych Osobowych (UODO).
