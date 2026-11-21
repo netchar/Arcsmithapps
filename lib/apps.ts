@@ -23,6 +23,7 @@ export interface AppData {
   tagline: string;
   icon: string;
   playStoreUrl: string;
+  supportEmail?: string;
   status: "available" | "coming-soon";
   featured: boolean;
   order: number;

@@ -1,17 +1,24 @@
 import Link from "next/link";
-import { FileText, Shield } from "lucide-react";
+import { FileText, Mail, Shield } from "lucide-react";
 import { localePath } from "@/lib/locale-path";
 
 interface AppLegalProps {
   appSlug: string;
   appName: string;
   lang: string;
+  supportEmail?: string;
   dict: {
-    legal: { privacyPolicy: string; terms: string };
+    legal: { privacyPolicy: string; terms: string; support: string };
   };
 }
 
-export function AppLegal({ appSlug, appName, lang, dict }: AppLegalProps) {
+export function AppLegal({
+  appSlug,
+  appName,
+  lang,
+  supportEmail,
+  dict,
+}: AppLegalProps) {
   return (
     <section className="border-t border-border">
       <div className="mx-auto max-w-[1200px] px-6 py-12">
@@ -31,6 +38,18 @@ export function AppLegal({ appSlug, appName, lang, dict }: AppLegalProps) {
             <FileText size={14} />
             {dict.legal.terms}
           </Link>
+          {supportEmail && (
+            <>
+              <span className="text-border">|</span>
+              <a
+                href={`mailto:${supportEmail}`}
+                className="inline-flex items-center gap-2 text-text-muted hover:text-text-secondary transition-colors"
+              >
+                <Mail size={14} />
+                {dict.legal.support}: {supportEmail}
+              </a>
+            </>
+          )}
         </div>
       </div>
     </section>

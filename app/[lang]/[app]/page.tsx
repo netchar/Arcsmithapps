@@ -65,7 +65,13 @@ export default async function AppPage({ params }: PageProps) {
         <FeatureGrid features={gridFeatures} dict={dict} />
       )}
       <CtaBanner app={app} dict={dict} />
-      <AppLegal appSlug={app.slug} appName={app.name} lang={lang} dict={dict} />
+      <AppLegal
+        appSlug={app.slug}
+        appName={app.name}
+        lang={lang}
+        supportEmail={app.supportEmail}
+        dict={dict}
+      />
     </div>
   );
 }
