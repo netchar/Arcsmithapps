@@ -52,13 +52,19 @@ export default async function AppPage({ params }: PageProps) {
     <div>
       <AppLandingHero app={app} dict={dict} />
       {app.showcase.length > 0 && (
-        <ShowcaseStrip showcase={app.showcase} appName={app.name} dict={dict} />
+        <ShowcaseStrip
+          showcase={app.showcase}
+          appName={app.name}
+          framedScreenshots={app.framedScreenshots}
+          dict={dict}
+        />
       )}
       {spotlightFeatures.length > 0 && (
         <FeatureSpotlight
           features={spotlightFeatures}
           screenshots={app.screenshots}
           appName={app.name}
+          framedScreenshots={app.framedScreenshots}
         />
       )}
       {gridFeatures.length > 0 && (

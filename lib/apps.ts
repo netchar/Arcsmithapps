@@ -17,12 +17,23 @@ export interface ShowcaseItem {
   caption: string;
 }
 
+export type AppStoreStatus = "available" | "coming-soon";
+
+/** The App Store listing. "coming-soon" shows a label without a link, for an app that Apple has not released yet. */
+export interface AppStoreListing {
+  url: string;
+  status: AppStoreStatus;
+}
+
 export interface AppData {
   name: string;
   slug: string;
   tagline: string;
   icon: string;
   playStoreUrl: string;
+  appStore?: AppStoreListing;
+  /** The screenshots already show the device frame (transparent PNG or WebP), so the site draws none. */
+  framedScreenshots?: boolean;
   supportEmail?: string;
   status: "available" | "coming-soon";
   featured: boolean;

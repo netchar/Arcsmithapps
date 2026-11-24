@@ -128,7 +128,10 @@ export function FeaturedHero({ app, lang, dict }: FeaturedHeroProps) {
                 key={src}
                 src={src}
                 alt={`${app.name} screenshot ${i + 1}`}
-                className={`w-[160px] h-[340px] sm:w-[185px] sm:h-[400px] ${
+                framed={app.framedScreenshots}
+                className={`${
+                  app.framedScreenshots ? "w-[160px] sm:w-[185px]" : "w-[160px] h-[340px] sm:w-[185px] sm:h-[400px]"
+                } ${
                   i === 1 ? "translate-y-10" : i === 2 ? "translate-y-4" : ""
                 }`}
               />

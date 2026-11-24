@@ -1,14 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { StoreButtons, type StoreButtonsDict } from "@/components/ui/StoreButtons";
 import type { AppData } from "@/lib/apps";
 
 interface CtaBannerProps {
   app: AppData;
   dict: {
-    cta: {
-      getOnGooglePlay: string;
+    cta: StoreButtonsDict & {
       comingSoon: string;
       comingSoonSub: string;
     };
@@ -36,16 +35,10 @@ export function CtaBanner({ app, dict }: CtaBannerProps) {
           </p>
 
           <div className="mt-8">
-            {app.status === "available" && app.playStoreUrl ? (
-              <a
-                href={app.playStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#1e4d3a] to-[#163d2e] px-8 py-4 text-base font-semibold text-[#d0e8dc] transition-all hover:shadow-[0_4px_20px_rgba(30,77,58,0.4)] cursor-pointer"
-              >
-                {dict.cta.getOnGooglePlay}
-                <ExternalLink size={16} />
-              </a>
+            {app.status === "available" ? (
+              <div className="flex flex-wrap gap-4 justify-center">
+                <StoreButtons app={app} dict={dict.cta} size="lg" />
+              </div>
             ) : (
               <div className="inline-flex flex-col items-center gap-2">
                 <span className="inline-flex items-center gap-2 rounded-xl bg-accent-subtle px-8 py-4 text-base font-semibold text-accent border border-accent/20">

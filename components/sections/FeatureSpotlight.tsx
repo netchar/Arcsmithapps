@@ -9,6 +9,7 @@ interface FeatureSpotlightProps {
   features: AppFeature[];
   screenshots: string[];
   appName: string;
+  framedScreenshots?: boolean;
 }
 
 function getIcon(iconName: string) {
@@ -16,7 +17,7 @@ function getIcon(iconName: string) {
   return Icon ?? LucideIcons.Sparkles;
 }
 
-export function FeatureSpotlight({ features, screenshots, appName }: FeatureSpotlightProps) {
+export function FeatureSpotlight({ features, screenshots, appName, framedScreenshots }: FeatureSpotlightProps) {
   return (
     <section>
       {features.map((feature, i) => {
@@ -70,7 +71,8 @@ export function FeatureSpotlight({ features, screenshots, appName }: FeatureSpot
                   <PhoneMockup
                     src={screenshotSrc}
                     alt={`${appName} — ${feature.title}`}
-                    className="w-[220px] h-[477px]"
+                    framed={framedScreenshots}
+                    className={framedScreenshots ? "w-[230px]" : "w-[220px] h-[477px]"}
                   />
                 </motion.div>
               </div>

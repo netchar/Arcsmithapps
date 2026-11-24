@@ -2,14 +2,14 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
 import { PhoneMockup } from "@/components/ui/PhoneMockup";
+import { StoreButtons, type StoreButtonsDict } from "@/components/ui/StoreButtons";
 import type { AppData } from "@/lib/apps";
 
 interface AppLandingHeroProps {
   app: AppData;
   dict: {
-    cta: { getOnGooglePlay: string; comingSoon: string };
+    cta: StoreButtonsDict & { comingSoon: string };
   };
 }
 
@@ -62,16 +62,8 @@ export function AppLandingHero({ app, dict }: AppLandingHeroProps) {
 
             {/* CTA */}
             <div className="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start">
-              {app.status === "available" && app.playStoreUrl ? (
-                <a
-                  href={app.playStoreUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#1e4d3a] to-[#163d2e] px-7 py-3.5 text-sm font-semibold text-[#d0e8dc] transition-all hover:shadow-[0_4px_20px_rgba(30,77,58,0.4)] cursor-pointer"
-                >
-                  {dict.cta.getOnGooglePlay}
-                  <ExternalLink size={16} />
-                </a>
+              {app.status === "available" ? (
+                <StoreButtons app={app} dict={dict.cta} />
               ) : (
                 <span className="inline-flex items-center gap-2 rounded-xl bg-accent-subtle px-7 py-3.5 text-sm font-semibold text-accent border border-accent/20">
                   {dict.cta.comingSoon}
@@ -104,7 +96,10 @@ export function AppLandingHero({ app, dict }: AppLandingHeroProps) {
                 key={src}
                 src={src}
                 alt={`${app.name} screenshot ${i + 1}`}
-                className={`w-[150px] h-[325px] sm:w-[175px] sm:h-[379px] ${
+                framed={app.framedScreenshots}
+                className={`${
+                  app.framedScreenshots ? "w-[150px] sm:w-[175px]" : "w-[150px] h-[325px] sm:w-[175px] sm:h-[379px]"
+                } ${
                   i === 1 ? "translate-y-10" : i === 2 ? "translate-y-4" : ""
                 }`}
               />

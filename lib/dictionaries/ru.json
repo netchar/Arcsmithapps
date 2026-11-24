@@ -48,6 +48,8 @@
     "learnMore": "Подробнее",
     "comingSoon": "Скоро",
     "comingSoonSub": "Мы сообщим, когда будет готово",
-    "getOnGooglePlay": "Скачать в Google Play"
+    "getOnGooglePlay": "Скачать в Google Play",
+    "getOnAppStore": "Скачать в App Store",
+    "comingSoonAppStore": "Скоро в App Store"
   }
 }

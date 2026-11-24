@@ -3,17 +3,19 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { FRAMED_PHONE_ASPECT } from "@/components/ui/PhoneMockup";
 import type { ShowcaseItem } from "@/lib/apps";
 
 interface ShowcaseStripProps {
   showcase: ShowcaseItem[];
   appName: string;
+  framedScreenshots?: boolean;
   dict: {
     showcase: { label: string; heading: string };
   };
 }
 
-export function ShowcaseStrip({ showcase, appName, dict }: ShowcaseStripProps) {
+export function ShowcaseStrip({ showcase, appName, framedScreenshots, dict }: ShowcaseStripProps) {
   const [active, setActive] = useState(0);
   const item = showcase[active];
 
@@ -38,7 +40,13 @@ export function ShowcaseStrip({ showcase, appName, dict }: ShowcaseStripProps) {
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           {/* Phone mockup — centered */}
           <div className="shrink-0 order-1 lg:order-2">
-            <div className="relative w-[240px] h-[520px] overflow-hidden rounded-[32px] border border-white/[0.06] bg-black shadow-[0_8px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.04)]">
+            <div
+              className={
+                framedScreenshots
+                  ? `relative w-[250px] ${FRAMED_PHONE_ASPECT}`
+                  : "relative w-[240px] h-[520px] overflow-hidden rounded-[32px] border border-white/[0.06] bg-black shadow-[0_8px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.04)]"
+              }
+            >
               <AnimatePresence mode="wait">
                 <motion.div
                   key={item.image}
@@ -52,8 +60,12 @@ export function ShowcaseStrip({ showcase, appName, dict }: ShowcaseStripProps) {
                     src={item.image}
                     alt={`${appName} — ${item.title}`}
                     fill
-                    className="object-cover object-top"
-                    sizes="240px"
+                    className={
+                      framedScreenshots
+                        ? "object-contain drop-shadow-[0_8px_40px_rgba(0,0,0,0.5)]"
+                        : "object-cover object-top"
+                    }
+                    sizes="250px"
                   />
                 </motion.div>
               </AnimatePresence>
